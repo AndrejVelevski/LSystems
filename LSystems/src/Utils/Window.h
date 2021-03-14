@@ -6,6 +6,7 @@
 #include <thread>
 
 #include "Types.h"
+#include "../Renderer/IScene.h"
 
 class Window
 {
@@ -23,5 +24,6 @@ private:
 	std::string mTitle;
 	GLFWwindow* mWindow;
 	std::thread* mThread;
+	IScene* mScene;
 };
 
