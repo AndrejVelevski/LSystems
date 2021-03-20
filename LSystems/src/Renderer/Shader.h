@@ -23,6 +23,7 @@ public:
 	void setUniformMatrix4fv(const std::string& uniform, const glm::mat4& mat);
 
 	void setAttribute2f(const std::string& attribute, uint32 vertexSizeInBytes, uint32 attributeOffsetInBytes);
+	void setAttribute3f(const std::string& attribute, uint32 vertexSizeInBytes, uint32 attributeOffsetInBytes);
 
 	void bind() const;
 	void unbind() const;

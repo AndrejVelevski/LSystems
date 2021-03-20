@@ -3,6 +3,7 @@
 #include "../Renderer/IScene.h"
 #include "../Renderer/Mesh.h"
 #include "../Renderer/Shader.h"
+#include "../Renderer/PerspectiveCamera.h"
 
 class TestScene : public IScene
 {
@@ -15,5 +16,6 @@ public:
 private:
 	Mesh* mMesh;
 	Shader* mShader;
+	PerspectiveCamera* mCamera;
 };
 

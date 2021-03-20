@@ -1,11 +1,13 @@
 #pragma once
 
 #include "Shader.h"
+#include "Transform.h"
+#include "ICamera.h"
 #include "../Utils/Types.h"
 
 #include <vector>
 
-class Mesh
+class Mesh : public Transform
 {
 public:
 	Mesh();
@@ -15,7 +17,7 @@ public:
 	void unbind() const;
 
 	void update(float delta);
-	void draw(const Shader& shader) const;
+	void draw(Shader& shader, const ICamera& camera) const;
 
 private:
 	uint32 mVAO;

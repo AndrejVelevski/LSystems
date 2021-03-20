@@ -173,6 +173,23 @@ void Shader::setAttribute2f(const std::string& attribute, uint32 vertexSizeInByt
 	}
 }
 
+void Shader::setAttribute3f(const std::string& attribute, uint32 vertexSizeInBytes, uint32 attributeOffsetInBytes)
+{
+	auto iterator = mAttributes.find(attribute);
+	if (iterator != mAttributes.end())
+	{
+		glVertexAttribPointer(iterator->second, 3, GL_FLOAT, GL_FALSE, vertexSizeInBytes, (void*)attributeOffsetInBytes);
+		glEnableVertexAttribArray(iterator->second);
+	}
+	else
+	{
+		int location = glGetAttribLocation(mId, attribute.c_str());
+		mAttributes.insert(std::make_pair(attribute, location));
+		glVertexAttribPointer(location, 3, GL_FLOAT, GL_FALSE, vertexSizeInBytes, (void*)attributeOffsetInBytes);
+		glEnableVertexAttribArray(location);
+	}
+}
+
 void Shader::bind() const
 {
 	glUseProgram(mId);

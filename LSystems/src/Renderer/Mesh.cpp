@@ -27,9 +27,6 @@ Mesh::Mesh(const std::vector<float>& vertices, const std::vector<uint32>& elemen
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, mElements.size() * sizeof(uint32), &mElements[0], GL_STATIC_DRAW);
 
 	glBindVertexArray(0);
-
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-	//glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
 void Mesh::bind() const
@@ -47,9 +44,12 @@ void Mesh::update(float delta)
 
 }
 
-void Mesh::draw(const Shader& shader) const
+void Mesh::draw(Shader& shader, const ICamera& camera) const
 {
 	glBindVertexArray(mVAO);
 	shader.bind();
+	shader.setUniformMatrix4fv("uModel", getModel());
+	shader.setUniformMatrix4fv("uView", camera.getView());
+	shader.setUniformMatrix4fv("uProjection", camera.getProjection());
 	glDrawElements(GL_TRIANGLES, mElements.size(), GL_UNSIGNED_INT, nullptr);
 }

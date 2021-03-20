@@ -5,10 +5,8 @@
 
 #include <mutex>
 
-static std::mutex contextMutex;
-static std::mutex eventMutex;
-static std::mutex bufferMutex;
-static std::mutex sceneMutex;
+static std::mutex mutex;
+static bool loaded = false;
 
 //public
 Window::Window(uint16 width, uint16 height, const char* title)
@@ -27,7 +25,7 @@ void Window::exec()
 {
     if (mThread != nullptr)
     {
-        Log::warning("Window is already running");
+        Log::warning("Window \"%s\" is already running", mTitle);
         return;
     }
     
@@ -38,7 +36,7 @@ void Window::waitForFinished()
 {
     if (mThread == nullptr)
     {
-        Log::warning("Window is not running");
+        Log::warning("Window \"%s\" is not running", mTitle);
         return;
     }
 
@@ -47,16 +45,14 @@ void Window::waitForFinished()
     mThread = nullptr;
 
     glfwDestroyWindow(mWindow);
-    //delete mWindow;
     mWindow = nullptr;
 }
 
-// TODO: fix
 void Window::close()
 {
     if (mThread == nullptr)
     {
-        Log::warning("Window is not running");
+        Log::warning("Window \"%s\" is not running", mTitle);
         return;
     }
 
@@ -68,31 +64,28 @@ void Window::close()
 //private
 void Window::mfExec()
 {
-    contextMutex.lock();
     mWindow = glfwCreateWindow(mWidth, mHeight, mTitle.c_str(), nullptr, nullptr);
     glfwMakeContextCurrent(mWindow);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+    mutex.lock();
     gladLoadGLLoader(GLADloadproc(glfwGetProcAddress));
+    mutex.unlock();
+
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
     Log::success("(%s): %s", mTitle.c_str(), glGetString(GL_VERSION));
     mScene = new TestScene; //TODO: refactor
-    contextMutex.unlock();
 
     float delta = 0;
 
     while (true)
     {
-        contextMutex.lock();
-        glfwMakeContextCurrent(mWindow);
+		float time = glfwGetTime();
 
-        if (glfwWindowShouldClose(mWindow))
-        {
-            contextMutex.unlock();
-            break;
-        }
-        contextMutex.unlock();
-
-        sceneMutex.lock();
-        float time = glfwGetTime();
+		if (glfwWindowShouldClose(mWindow))
+		{
+			break;
+		}
 
         if (mScene != nullptr)
         {
@@ -100,15 +93,10 @@ void Window::mfExec()
             mScene->draw();
         }
 
-        delta = glfwGetTime() - time;
-        sceneMutex.unlock();
-
-        bufferMutex.lock();
         glfwSwapBuffers(mWindow);
-        bufferMutex.unlock();
 
-        eventMutex.lock();
         glfwPollEvents();
-        eventMutex.unlock();
+
+        delta = glfwGetTime() - time;
     }
 }
