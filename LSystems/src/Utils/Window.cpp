@@ -86,9 +86,12 @@ void Window::mfExec()
 	});
 
 	glfwSetWindowSizeCallback(mWindow, [](GLFWwindow* window, int32 width, int32 height) {
-        glViewport(0, 0, width, height);
         ((Window*)glfwGetWindowUserPointer(window))->mWidth = width;
         ((Window*)glfwGetWindowUserPointer(window))->mHeight = height;
+	});
+
+	glfwSetFramebufferSizeCallback(mWindow, [](GLFWwindow* window, int32 width, int32 height) {
+		glViewport(0, 0, width, height);
 	});
     mutex.unlock();
 
