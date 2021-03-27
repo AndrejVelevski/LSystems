@@ -2,9 +2,9 @@
 
 int main(int argc, char** argv)
 {
-	int numWindows = 4;
-	int width = 640;
-	int height = 480;
+	int numWindows = 20;
+	int width = 200;
+	int height = 200;
 	MainWindow** windows = new MainWindow*[numWindows];
 
 	for (int i = 0; i < numWindows; ++i)

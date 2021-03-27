@@ -63,13 +63,11 @@ void Window::mfExec()
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	mWindow = glfwCreateWindow(mWidth, mHeight, mTitle.c_str(), nullptr, nullptr);
-
     glfwMakeContextCurrent(mWindow);
+    glfwSetWindowUserPointer(mWindow, this);
 
     if (!gladLoadGLLoader(GLADloadproc(glfwGetProcAddress)))
         Log::fatal("Window \"%s\" failed to initialize GLAD", mTitle);
-    
-    glfwSetWindowUserPointer(mWindow, this);
     
     glfwSetKeyCallback(mWindow, [](GLFWwindow* window, int32 key, int32 scancode, int32 action, int32 mods) {
         ((Window*)glfwGetWindowUserPointer(window))->keyboardCallback(key, scancode, action, mods);
