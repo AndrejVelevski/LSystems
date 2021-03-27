@@ -13,6 +13,6 @@ public:
 	static void fatal(const char* message, ...);
 
 private:
-	static void writeLog(const char* prepend, const char* message, va_list args);
+	static void writeLog(const char* prepend, const char* message, va_list args, int color=15);
 };
 

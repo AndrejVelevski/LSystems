@@ -90,10 +90,10 @@ void Window::mfExec()
         ((Window*)glfwGetWindowUserPointer(window))->mWidth = width;
         ((Window*)glfwGetWindowUserPointer(window))->mHeight = height;
 	});
-
     mutex.unlock();
 
     setup();
+
 	Log::success("(%s): %s", mTitle.c_str(), glGetString(GL_VERSION));
 
     float delta = 0;
