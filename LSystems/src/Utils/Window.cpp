@@ -3,6 +3,7 @@
 #include <mutex>
 
 static std::mutex mutex;
+static std::mutex mutex2;
 
 Window::Window(uint16 width, uint16 height, const std::string& title)
 {
@@ -57,15 +58,18 @@ void Window::close()
 
 void Window::mfExec()
 {
-    mWindow = glfwCreateWindow(mWidth, mHeight, mTitle.c_str(), nullptr, nullptr);
-    
 	mutex.lock();
-    glfwMakeContextCurrent(mWindow);
-    glfwSetWindowUserPointer(mWindow, this);
-
-	gladLoadGLLoader(GLADloadproc(glfwGetProcAddress));
-    
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	mWindow = glfwCreateWindow(mWidth, mHeight, mTitle.c_str(), nullptr, nullptr);
+
+    glfwMakeContextCurrent(mWindow);
+
+    if (!gladLoadGLLoader(GLADloadproc(glfwGetProcAddress)))
+        Log::fatal("Window \"%s\" failed to initialize GLAD", mTitle);
+    
+    glfwSetWindowUserPointer(mWindow, this);
     
     glfwSetKeyCallback(mWindow, [](GLFWwindow* window, int32 key, int32 scancode, int32 action, int32 mods) {
         ((Window*)glfwGetWindowUserPointer(window))->keyboardCallback(key, scancode, action, mods);
@@ -88,6 +92,7 @@ void Window::mfExec()
         ((Window*)glfwGetWindowUserPointer(window))->mWidth = width;
         ((Window*)glfwGetWindowUserPointer(window))->mHeight = height;
 	});
+
     mutex.unlock();
 
     setup();
