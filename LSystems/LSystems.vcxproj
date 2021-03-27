@@ -85,25 +85,26 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Dependencies\glad\src\glad.c" />
+    <ClCompile Include="src\MainWindow.cpp" />
+    <ClCompile Include="src\Renderer\OrthographicCamera.cpp" />
     <ClCompile Include="src\Renderer\PerspectiveCamera.cpp" />
     <ClCompile Include="src\Renderer\Mesh.cpp" />
     <ClCompile Include="src\Renderer\Shader.cpp" />
     <ClCompile Include="src\Utils\Log.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Utils\Window.cpp" />
-    <ClCompile Include="src\Scenes\TestScene.cpp" />
     <ClCompile Include="src\Renderer\Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\MainWindow.h" />
+    <ClInclude Include="src\Renderer\OrthographicCamera.h" />
     <ClInclude Include="src\Renderer\PerspectiveCamera.h" />
     <ClInclude Include="src\Renderer\ICamera.h" />
     <ClInclude Include="src\Renderer\Mesh.h" />
     <ClInclude Include="src\Renderer\Shader.h" />
-    <ClInclude Include="src\Renderer\IScene.h" />
     <ClInclude Include="src\Utils\Types.h" />
     <ClInclude Include="src\Utils\Log.h" />
     <ClInclude Include="src\Utils\Window.h" />
-    <ClInclude Include="src\Scenes\TestScene.h" />
     <ClInclude Include="src\Renderer\Transform.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

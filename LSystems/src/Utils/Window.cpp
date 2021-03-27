@@ -1,15 +1,10 @@
 #include "Window.h"
 
-#include "Log.h"
-#include "../Scenes/TestScene.h"
-
 #include <mutex>
 
 static std::mutex mutex;
-static bool loaded = false;
 
-//public
-Window::Window(uint16 width, uint16 height, const char* title)
+Window::Window(uint16 width, uint16 height, const std::string& title)
 {
     glfwInit();
 
@@ -18,7 +13,6 @@ Window::Window(uint16 width, uint16 height, const char* title)
     mTitle = title;
     mThread = nullptr;
     mWindow = nullptr;
-    mScene = nullptr;
 }
 
 void Window::exec()
@@ -61,25 +55,50 @@ void Window::close()
     waitForFinished();
 }
 
-//private
 void Window::mfExec()
 {
     mWindow = glfwCreateWindow(mWidth, mHeight, mTitle.c_str(), nullptr, nullptr);
+    
+	mutex.lock();
     glfwMakeContextCurrent(mWindow);
+    glfwSetWindowUserPointer(mWindow, this);
 
-    mutex.lock();
-    gladLoadGLLoader(GLADloadproc(glfwGetProcAddress));
+	gladLoadGLLoader(GLADloadproc(glfwGetProcAddress));
+    
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    
+    glfwSetKeyCallback(mWindow, [](GLFWwindow* window, int32 key, int32 scancode, int32 action, int32 mods) {
+        ((Window*)glfwGetWindowUserPointer(window))->keyboardCallback(key, scancode, action, mods);
+    });
+
+	glfwSetMouseButtonCallback(mWindow, [](GLFWwindow* window, int32 button, int32 action, int32 mods) {
+		((Window*)glfwGetWindowUserPointer(window))->mouseButtonsCallback(button, action, mods);
+	});
+
+	glfwSetCursorPosCallback(mWindow, [](GLFWwindow* window, double xpos, double ypos) {
+		((Window*)glfwGetWindowUserPointer(window))->mousePositionCallback(xpos, ypos);
+	});
+
+	glfwSetCursorEnterCallback(mWindow, [](GLFWwindow* window, int32 entered) {
+		((Window*)glfwGetWindowUserPointer(window))->mouseEnteredCallback(entered);
+	});
+
+	glfwSetWindowSizeCallback(mWindow, [](GLFWwindow* window, int32 width, int32 height) {
+        glViewport(0, 0, width, height);
+        ((Window*)glfwGetWindowUserPointer(window))->mWidth = width;
+        ((Window*)glfwGetWindowUserPointer(window))->mHeight = height;
+	});
     mutex.unlock();
 
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-    Log::success("(%s): %s", mTitle.c_str(), glGetString(GL_VERSION));
-    mScene = new TestScene; //TODO: refactor
+    setup();
+	Log::success("(%s): %s", mTitle.c_str(), glGetString(GL_VERSION));
 
     float delta = 0;
 
     while (true)
     {
+        //glfwWaitEvents();
+
 		float time = glfwGetTime();
 
 		if (glfwWindowShouldClose(mWindow))
@@ -87,11 +106,8 @@ void Window::mfExec()
 			break;
 		}
 
-        if (mScene != nullptr)
-        {
-            mScene->update(delta);
-            mScene->draw();
-        }
+        update(delta);
+        draw();
 
         glfwSwapBuffers(mWindow);
 

@@ -1,12 +1,12 @@
 #include "PerspectiveCamera.h"
 
-PerspectiveCamera::PerspectiveCamera()
+PerspectiveCamera::PerspectiveCamera(float fov, float aspect)
 {
 	front = { 0, 0, -1 };
 	up = { 0, 1, 0 };
 
-	fov = 70;
-	aspect = 1;
+	this->fov = fov;
+	this->aspect = aspect;
 	near = 0.1;
 	far = 1000;
 }

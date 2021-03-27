@@ -3,11 +3,11 @@
 #include "ICamera.h"
 #include "Transform.h"
 
-class PerspectiveCamera : public Transform, public ICamera
+class OrthographicCamera : public Transform, public ICamera
 {
 
 public:
-	PerspectiveCamera(float fov, float aspect);
+	OrthographicCamera(float left, float right, float top, float bottom);
 
 	glm::mat4 getView() const override;
 	glm::mat4 getView(const glm::vec3 target) const;
@@ -16,8 +16,10 @@ public:
 	glm::vec3 front;
 	glm::vec3 up;
 
-	float fov;
-	float aspect;
+	float left;
+	float right;
+	float top;
+	float bottom;
 	float near;
 	float far;
 };

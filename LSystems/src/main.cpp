@@ -1,12 +1,33 @@
-#include "Utils/Window.h"
+#include "MainWindow.h"
 
-int main(void)
+int main(int argc, char** argv)
 {
-	Window window1(640, 480, "L-Systems 1");
-	Window window2(640, 480, "L-Systems 2");
-	window1.exec();
-	window2.exec();
-	window1.waitForFinished();
-	window2.waitForFinished();
+	int numWindows = 4;
+	int width = 640;
+	int height = 480;
+	MainWindow** windows = new MainWindow*[numWindows];
+
+	for (int i = 0; i < numWindows; ++i)
+	{
+		windows[i] = new MainWindow(width, height, "L-Systems " + std::to_string(i+1));
+	}
+
+	for (int i = 0; i < numWindows; ++i)
+	{
+		windows[i]->exec();
+	}
+
+	for (int i = 0; i < numWindows; ++i)
+	{
+		windows[i]->waitForFinished();
+	}
+
+	for (int i = 0; i < numWindows; ++i)
+	{
+		delete windows[i];
+	}
+
+	delete[] windows;
+
     return 0;
 }
