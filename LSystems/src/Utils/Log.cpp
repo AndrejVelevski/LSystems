@@ -61,5 +61,6 @@ void Log::writeLog(const char* prepend, const char* message, va_list args, int c
 	mutex.lock();
 	SetConsoleTextAttribute(console, color);
 	vprintf((std::string(prepend) + message + "\n").c_str(), args);
+	SetConsoleTextAttribute(console, 15);
 	mutex.unlock();
 }

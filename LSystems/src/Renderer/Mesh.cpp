@@ -1,6 +1,5 @@
 #include "Mesh.h"
 
-#include <glad/glad.h>
 #include "../Utils/Log.h"
 
 Mesh::Mesh(Shader* shader, std::vector<float>* vertices, std::vector<uint32>* elements)
@@ -15,11 +14,17 @@ Mesh::Mesh(Shader* shader, std::vector<float>* vertices, std::vector<uint32>* el
 
 	glBindVertexArray(mVAO);
 
-	glBindBuffer(GL_ARRAY_BUFFER, mVBO);
-	glBufferData(GL_ARRAY_BUFFER, mVertices->size() * sizeof(float), &mVertices->at(0), GL_STATIC_DRAW);
+	if (mVertices != nullptr)
+	{
+		glBindBuffer(GL_ARRAY_BUFFER, mVBO);
+		glBufferData(GL_ARRAY_BUFFER, mVertices->size() * sizeof(float), &mVertices->at(0), GL_STATIC_DRAW);
+	}
 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, mElements->size() * sizeof(uint32), &mElements->at(0), GL_STATIC_DRAW);
+	if (mElements != nullptr)
+	{
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, mElements->size() * sizeof(uint32), &mElements->at(0), GL_STATIC_DRAW);
+	}
 
 	glBindVertexArray(0);
 }
@@ -40,14 +45,18 @@ void Mesh::updateData(uint32 index, uint32 count)
 	glBufferSubData(GL_ARRAY_BUFFER, index * sizeof(float), count * sizeof(float), &mVertices->at(index));
 }
 
-void Mesh::draw(ICamera* camera)
+void Mesh::draw(ICamera* camera, Mode mode)
 {
 	glBindVertexArray(mVAO);
 	mShader->bind();
 	setUniformMatrix4fv("uModel", getModel());
 	setUniformMatrix4fv("uView", camera->getView());
 	setUniformMatrix4fv("uProjection", camera->getProjection());
-	glDrawElements(GL_TRIANGLES, mElements->size(), GL_UNSIGNED_INT, nullptr);
+
+	if (mElements != nullptr)
+		glDrawElements(mode, mElements->size(), GL_UNSIGNED_INT, nullptr);
+	else
+		glDrawArrays(mode, 0, mVertices->size());
 }
 
 void Mesh::setUniform1i(const std::string& uniform, int32 i)

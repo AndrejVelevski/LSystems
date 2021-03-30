@@ -8,7 +8,7 @@ MainWindow::MainWindow(uint16 width, uint16 height, const std::string& title) :
 
 void MainWindow::setup()
 {
-	//TODO: this should be in the constructor
+	//TODO: this should be in the constructor, but glad isn't initialized at that point
 	std::vector<float>* vertices1 = new std::vector<float> {
 		-0.5,  0.5, 0.0, 1.0, 0.0, 0.0,
 		 0.5,  0.5, 0.0, 0.0, 1.0, 0.0,

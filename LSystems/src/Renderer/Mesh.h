@@ -5,16 +5,35 @@
 #include "ICamera.h"
 #include "../Utils/Types.h"
 
+#include <glad/glad.h>
+
 #include <vector>
 
 class Mesh : public Transform
 {
 public:
+	static enum Mode
+	{
+		POINTS = GL_POINTS,
+		LINE_STRIP = GL_LINE_STRIP,
+		LINE_LOOP = GL_LINE_LOOP,
+		LINES = GL_LINES,
+		LINE_STRIP_ADJACENCY = GL_LINE_STRIP_ADJACENCY,
+		LINES_ADJACENCY = GL_LINES_ADJACENCY,
+		TRIANGLE_STRIP = GL_TRIANGLE_STRIP,
+		TRIANGLE_FAN = GL_TRIANGLE_FAN,
+		TRIANGLES = GL_TRIANGLES,
+		TRIANGLE_STRIP_ADJACENCY = GL_TRIANGLE_STRIP_ADJACENCY,
+		TRIANGLES_ADJACENCY = GL_TRIANGLES_ADJACENCY,
+		PATCHES = GL_PATCHES
+	};
+
+public:
 	Mesh(Shader* shader, std::vector<float>* vertices, std::vector<uint32>* elements);
 	~Mesh();
 
 	void updateData(uint32 index, uint32 count);
-	void draw(ICamera* camera);
+	void draw(ICamera* camera, Mode mode=Mode::TRIANGLES);
 
 	void setUniform1i(const std::string& uniform, int32 i);
 	void setUniform1f(const std::string& uniform, float f);
