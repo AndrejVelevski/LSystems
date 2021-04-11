@@ -85,17 +85,20 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Dependencies\glad\src\glad.c" />
+    <ClCompile Include="src\LSystem.cpp" />
     <ClCompile Include="src\MainWindow.cpp" />
     <ClCompile Include="src\Renderer\OrthographicCamera.cpp" />
     <ClCompile Include="src\Renderer\PerspectiveCamera.cpp" />
     <ClCompile Include="src\Renderer\Mesh.cpp" />
     <ClCompile Include="src\Renderer\Shader.cpp" />
+    <ClCompile Include="src\templsystems.cpp" />
     <ClCompile Include="src\Utils\Log.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Utils\Window.cpp" />
     <ClCompile Include="src\Renderer\Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\LSystem.h" />
     <ClInclude Include="src\MainWindow.h" />
     <ClInclude Include="src\Renderer\OrthographicCamera.h" />
     <ClInclude Include="src\Renderer\PerspectiveCamera.h" />

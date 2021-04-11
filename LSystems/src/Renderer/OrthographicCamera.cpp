@@ -9,21 +9,16 @@ OrthographicCamera::OrthographicCamera(float left, float right, float top, float
 	this->right = right;
 	this->top = top;
 	this->bottom = bottom;
-	near = -1000000000000.0;
-	far = 1000000000000.0;
+	near = -1000000000000000000.0f;
+	far = 1000000000000000000.0f;
 }
 
-glm::mat4 OrthographicCamera::getView() const
+glm::mat4 OrthographicCamera::getView()
 {
 	return glm::lookAt(position, position + front, up);
 }
 
-glm::mat4 OrthographicCamera::getView(const glm::vec3 target) const
-{
-	return glm::lookAt(position, target, up);
-}
-
-glm::mat4 OrthographicCamera::getProjection() const
+glm::mat4 OrthographicCamera::getProjection()
 {
 	return glm::ortho(left, right, bottom, top, near, far);
 }

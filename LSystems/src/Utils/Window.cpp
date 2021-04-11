@@ -3,7 +3,6 @@
 #include <mutex>
 
 static std::mutex mutex;
-static std::mutex mutex2;
 
 Window::Window(uint16 width, uint16 height, const std::string& title)
 {
@@ -53,7 +52,7 @@ void Window::close()
 
     if (mWindow != nullptr)
         glfwSetWindowShouldClose(mWindow, GLFW_TRUE);
-    waitForFinished();
+    //waitForFinished();
 }
 
 void Window::mfExec()
@@ -101,16 +100,11 @@ void Window::mfExec()
 
     float delta = 0;
 
-    while (true)
+    while (!glfwWindowShouldClose(mWindow))
     {
         //glfwWaitEvents();
 
 		float time = glfwGetTime();
-
-		if (glfwWindowShouldClose(mWindow))
-		{
-			break;
-		}
 
         update(delta);
         draw();

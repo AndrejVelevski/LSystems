@@ -13,8 +13,14 @@ public:
 	glm::vec3 rotation;
 	glm::vec3 scale;
 
-	glm::mat4 getModel() const;
+	glm::mat4 getModel();
+	glm::vec3 right() const;
+	glm::vec3 up() const;
+	glm::vec3 front() const;
 
-private:
+protected:
+	glm::vec3 mRight;
+	glm::vec3 mUp;
+	glm::vec3 mFront;
 };
 

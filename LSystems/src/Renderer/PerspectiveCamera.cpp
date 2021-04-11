@@ -2,26 +2,21 @@
 
 PerspectiveCamera::PerspectiveCamera(float fov, float aspect)
 {
-	front = { 0, 0, -1 };
-	up = { 0, 1, 0 };
-
 	this->fov = fov;
 	this->aspect = aspect;
-	near = 0.1;
-	far = 1000;
+	near = 0.001f;
+	far = 1000000000000000000.0f;
 }
 
-glm::mat4 PerspectiveCamera::getView() const
+glm::mat4 PerspectiveCamera::getView()
 {
-	return glm::lookAt(position, position + front, up);
+	getModel();
+	return glm::lookAt(position, position + mFront, mUp);
 }
 
-glm::mat4 PerspectiveCamera::getView(const glm::vec3 target) const
+glm::mat4 PerspectiveCamera::getProjection()
 {
-	return glm::lookAt(position, target, up);
-}
-
-glm::mat4 PerspectiveCamera::getProjection() const
-{
+	
 	return glm::perspective(glm::radians(fov), aspect, near, far);
 }
+

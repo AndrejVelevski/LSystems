@@ -25,8 +25,6 @@ Mesh::Mesh(Shader* shader, std::vector<float>* vertices, std::vector<uint32>* el
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, mElements->size() * sizeof(uint32), &mElements->at(0), GL_STATIC_DRAW);
 	}
-
-	glBindVertexArray(0);
 }
 
 Mesh::~Mesh()
@@ -152,6 +150,8 @@ void Mesh::setUniformMatrix4fv(const std::string& uniform, const glm::mat4& mat)
 void Mesh::setAttribute2f(const std::string& attribute, uint32 vertexSize, uint32 attributeOffset)
 {
 	glBindVertexArray(mVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, mVBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO);
 	auto iterator = mAttributes.find(attribute);
 	if (iterator != mAttributes.end())
 	{
@@ -171,6 +171,8 @@ void Mesh::setAttribute2f(const std::string& attribute, uint32 vertexSize, uint3
 void Mesh::setAttribute3f(const std::string& attribute, uint32 vertexSize, uint32 attributeOffset)
 {
 	glBindVertexArray(mVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, mVBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO);
 	auto iterator = mAttributes.find(attribute);
 	if (iterator != mAttributes.end())
 	{
@@ -184,5 +186,4 @@ void Mesh::setAttribute3f(const std::string& attribute, uint32 vertexSize, uint3
 		glVertexAttribPointer(location, 3, GL_FLOAT, GL_FALSE, vertexSize * sizeof(float), (void*)(attributeOffset * sizeof(float)));
 		glEnableVertexAttribArray(location);
 	}
-	glBindVertexArray(0);
 }

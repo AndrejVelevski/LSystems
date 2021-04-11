@@ -5,6 +5,8 @@ Transform::Transform()
 	this->position = { 0, 0, 0 };
 	this->rotation = { 0, 0, 0 };
 	this->scale = { 1, 1, 1 };
+
+	getModel();
 }
 
 Transform::Transform(const glm::vec3& position)
@@ -12,6 +14,8 @@ Transform::Transform(const glm::vec3& position)
 	this->position = position;
 	this->rotation = { 0, 0, 0 };
 	this->scale = { 0, 0, 0 };
+
+	getModel();
 }
 
 Transform::Transform(const glm::vec3& position, const glm::vec3& rotation, const glm::vec3& scale)
@@ -19,17 +23,38 @@ Transform::Transform(const glm::vec3& position, const glm::vec3& rotation, const
 	this->position = position;
 	this->rotation = rotation;
 	this->scale = scale;
+
+	getModel();
 }
 
-glm::mat4 Transform::getModel() const
+glm::mat4 Transform::getModel()
 {
-	glm::mat4 transform = glm::mat4(1.0);
+	glm::mat4 translationMatrix;
+	glm::mat4 rotationMatrix;
+	glm::mat4 scaleMatrix;
 
-	transform = glm::translate(transform, position);
-	transform = glm::rotate(transform, glm::radians(rotation.x), glm::vec3(1.0, 0.0, 0.0));
-	transform = glm::rotate(transform, glm::radians(rotation.y), glm::vec3(0.0, 1.0, 0.0));
-	transform = glm::rotate(transform, glm::radians(rotation.z), glm::vec3(0.0, 0.0, 1.0));
-	transform = glm::scale(transform, scale);
+	translationMatrix = glm::translate(glm::mat4(1.0), position);
+	rotationMatrix = glm::mat4(glm::quat(glm::radians(rotation)));
+	scaleMatrix = glm::scale(glm::mat4(1.0), scale);
 
-	return transform;
+	mRight = -normalize(glm::vec3(rotationMatrix[0]));
+	mUp = normalize(glm::vec3(rotationMatrix[1]));
+	mFront = normalize(glm::vec3(rotationMatrix[2]));
+
+	return translationMatrix * rotationMatrix * scaleMatrix;
+}
+
+glm::vec3 Transform::right() const
+{
+	return mRight;
+}
+
+glm::vec3 Transform::up() const
+{
+	return mUp;
+}
+
+glm::vec3 Transform::front() const
+{
+	return mFront;
 }
