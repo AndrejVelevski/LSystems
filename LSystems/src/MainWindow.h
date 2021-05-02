@@ -5,7 +5,6 @@
 #include "Renderer/Mesh.h"
 #include "Renderer/Shader.h"
 #include "Renderer/PerspectiveCamera.h"
-#include "Renderer/OrthographicCamera.h"
 
 #include "LSystem.h"
 
@@ -27,6 +26,7 @@ private:
 	Mesh* mMesh;
 	Mesh* mFloorMesh;
 	Mesh* mCoordinatesMesh;
+	Mesh* mCylinderMesh;
 	PerspectiveCamera* mPCamera;
 	LSystem mLSystem;
 

@@ -14,13 +14,13 @@ Mesh::Mesh(Shader* shader, std::vector<float>* vertices, std::vector<uint32>* el
 
 	glBindVertexArray(mVAO);
 
-	if (mVertices != nullptr)
+	if (mVertices != nullptr && mVertices->size() > 0)
 	{
 		glBindBuffer(GL_ARRAY_BUFFER, mVBO);
 		glBufferData(GL_ARRAY_BUFFER, mVertices->size() * sizeof(float), &mVertices->at(0), GL_STATIC_DRAW);
 	}
 
-	if (mElements != nullptr)
+	if (mElements != nullptr && mElements->size() > 0)
 	{
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, mElements->size() * sizeof(uint32), &mElements->at(0), GL_STATIC_DRAW);
@@ -54,7 +54,7 @@ void Mesh::draw(ICamera* camera, Mode mode)
 	if (mElements != nullptr)
 		glDrawElements(mode, mElements->size(), GL_UNSIGNED_INT, nullptr);
 	else
-		glDrawArrays(mode, 0, mVertices->size());
+		glDrawArrays(mode, 0, mVertices->size()/2);
 }
 
 void Mesh::setUniform1i(const std::string& uniform, int32 i)
@@ -185,5 +185,78 @@ void Mesh::setAttribute3f(const std::string& attribute, uint32 vertexSize, uint3
 		mAttributes.insert(std::make_pair(attribute, location));
 		glVertexAttribPointer(location, 3, GL_FLOAT, GL_FALSE, vertexSize * sizeof(float), (void*)(attributeOffset * sizeof(float)));
 		glEnableVertexAttribArray(location);
+	}
+}
+
+void Mesh::generateCylinder(float bottomRadius, float topRadius, float height, std::vector<glm::vec3>& vertices, std::vector<uint32>& elements, uint32 precision)
+{
+	vertices.push_back({ 0, 0, 0 });
+	for (int i = 0; i < precision; ++i)
+	{
+		float angle = glm::radians(i * 360.0 / precision);
+		float x = bottomRadius * cos(angle);
+		float y = 0;
+		float z = bottomRadius * sin(angle);
+
+		vertices.push_back({ x, y, z });
+
+		if (i != precision - 1)
+		{
+			elements.push_back(i + 2);
+			elements.push_back(i + 1);
+			elements.push_back(0);
+		}
+		else
+		{
+			elements.push_back(1);
+			elements.push_back(i + 1);
+			elements.push_back(0);
+		}
+	}
+
+	vertices.push_back({ 0, height, 0 });
+	for (int i = 0; i < precision; ++i)
+	{
+		float angle = glm::radians(i * 360.0 / precision);
+		float x = topRadius * cos(angle);
+		float y = height;
+		float z = topRadius * sin(angle);
+
+		vertices.push_back({ x, y, z });
+
+		if (i != precision - 1)
+		{
+			elements.push_back(precision + 1);
+			elements.push_back(precision + i + 2);
+			elements.push_back(precision + i + 3);
+		}
+		else
+		{
+			elements.push_back(precision + 1);
+			elements.push_back(precision + i + 2);
+			elements.push_back(precision + 2);
+		}
+	}
+
+	for (int i = 0; i < precision; ++i)
+	{
+		if (i != precision - 1)
+		{
+			elements.push_back(i + 1);
+			elements.push_back(i + 2);
+			elements.push_back(i + precision + 2);
+			elements.push_back(i + 2);
+			elements.push_back(i + precision + 3);
+			elements.push_back(i + precision + 2);
+		}
+		else
+		{
+			elements.push_back(i + 1);
+			elements.push_back(1);
+			elements.push_back(i + precision + 2);
+			elements.push_back(1);
+			elements.push_back(precision + 2);
+			elements.push_back(i + precision + 2);
+		}
 	}
 }

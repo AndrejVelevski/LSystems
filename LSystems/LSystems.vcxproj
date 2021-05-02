@@ -96,6 +96,7 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Utils\Window.cpp" />
     <ClCompile Include="src\Renderer\Transform.cpp" />
+    <ClCompile Include="src\TestWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\LSystem.h" />
@@ -109,6 +110,7 @@
     <ClInclude Include="src\Utils\Log.h" />
     <ClInclude Include="src\Utils\Window.h" />
     <ClInclude Include="src\Renderer\Transform.h" />
+    <ClInclude Include="src\TestWindow.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

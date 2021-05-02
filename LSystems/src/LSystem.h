@@ -12,12 +12,12 @@ public:
 	enum Instruction {
 		DRAW,
 		MOVE,
-		TURN,
-		ROTATEZ, YAW,
-		ROTATEY, PITCH,
-		ROTATEX, ROLL,
+		ROTATEZ, ROLL,
+		ROTATEY, YAW,
+		ROTATEX, PITCH,
 		PUSH,
-		POP
+		POP,
+		SCALE
 	};
 
 public:

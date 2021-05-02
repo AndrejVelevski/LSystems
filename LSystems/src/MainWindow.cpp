@@ -1,9 +1,6 @@
 #include "MainWindow.h"
 
-
-
-MainWindow::MainWindow(uint16 width, uint16 height, const std::string& title) :
-	Window(width, height, title)
+MainWindow::MainWindow(uint16 width, uint16 height, const std::string& title) : Window(width, height, title)
 {
 
 }
@@ -12,42 +9,102 @@ void MainWindow::setup()
 {
 	//TODO: this should be in the constructor, but glad isn't initialized at that point
 
-	mLSystem = LSystem( //Islands and lakes
-		"-&F+FFF",
+	/*mLSystem = LSystem(
+		"|F",
 		{
-			/*{'A', "B-F+CFC+F-D&F^D-F+&&CFC+F+B//"},
-			{'B', "A&F^CFB^F^D^^-F-D^|F^B|FC^F^A//"},
-			{'C', "|D^|F^B-F+C^F^A&&FA&F^C+F+B^F^D//"},
-			{'D', "|CFB-F+B|FA&F^A&&FB-F+B|FC//"}*/
+			{'F', "F[Fz[zFZXFZYF]Z[ZFxzFyzF]]"}
 		},
 		{
 			{'F', {LSystem::DRAW, 1}},
+			{'x', {LSystem::ROTATEX, 23}},
+			{'y', {LSystem::ROTATEY, 23}},
+			{'z', {LSystem::ROTATEZ, 23}},
+			{'X', {LSystem::ROTATEX, -23}},
+			{'Y', {LSystem::ROTATEY, -23}},
+			{'Z', {LSystem::ROTATEZ, -23}},
+			{'[', {LSystem::PUSH, 0}},
+			{']', {LSystem::POP, 0}},
+			{'|', {LSystem::PITCH, -90}}
+		}
+	);*/
+
+	/*mLSystem = LSystem( //stairs
+		"A",
+		{
+			{'A', "G+F+G+F+^HvG[vH]+F[vH]+G[vH]+[F]+RA"}
+		},
+		{
+			{'F', {LSystem::DRAW, 1}},
+			{'f', {LSystem::MOVE, 1}},
+			{'G', {LSystem::DRAW, 4}},
+			{'H', {LSystem::DRAW, 0.5}},
+			{'[', {LSystem::PUSH, 0}},
+			{']', {LSystem::POP, 0}},
+			{'v', {LSystem::PITCH, 90}},
+			{'^', {LSystem::PITCH, -90}},
 			{'+', {LSystem::YAW, 90}},
 			{'-', {LSystem::YAW, -90}},
-			{'&', {LSystem::PITCH, 45}},
-			{'^', {LSystem::PITCH, -90}},
-			{'<', {LSystem::ROLL, 45}},
-			{'>', {LSystem::ROLL, -90}},
-			{'|', {LSystem::YAW, 180}}
+			{'R', {LSystem::YAW, 1}},
+		}
+	);*/
+
+	mLSystem = LSystem( //tree
+		"|F",
+		{
+			{'F', "F<+[vvFvF^F]>-[^FvvF]"}
+		},
+		{
+			{'F', {LSystem::DRAW, 1}},
+			{'[', {LSystem::PUSH, 0}},
+			{']', {LSystem::POP, 0}},
+			{'v', {LSystem::PITCH, 20}},
+			{'^', {LSystem::PITCH, -20}},
+			{'+', {LSystem::YAW, 40}},
+			{'-', {LSystem::YAW, -40}},
+			{'<', {LSystem::ROLL, 40}},
+			{'>', {LSystem::ROLL, -40}},
+
+			{'|', {LSystem::PITCH, -90}}
 		}
 	);
+
+	/*mLSystem = LSystem(
+		"^FFFFFFFFFFFFFFFFF",
+		{
+			
+		},
+		{
+			{'F', {LSystem::DRAW, 1}},
+			{'f', {LSystem::MOVE, 1}},
+			{'[', {LSystem::PUSH, 0}},
+			{']', {LSystem::POP, 0}},
+			{'v', {LSystem::PITCH, 90}},
+			{'^', {LSystem::PITCH, -90}},
+			{'+', {LSystem::YAW, 90}},
+			{'-', {LSystem::YAW, -90}},
+			{'<', {LSystem::ROLL, 90}},
+			{'>', {LSystem::ROLL, -90}},
+		}
+	);*/
 	 
 	std::vector<float>* vertices = new std::vector<float>;
 	std::vector<uint32>* elements = new std::vector<uint32>;
-	mLSystem.generate(0, vertices, elements);
+	mLSystem.generate(4, vertices, elements);
 
 	mPCamera = new PerspectiveCamera(70, (float)mWidth / (float)mHeight);
-	mPCamera->position = { 0, 0.3, -1 };
+	mPCamera->position = { 0, 0.3, 1 };
+	mPCamera->rotation.y = 180;
 	Shader* shader = new Shader("res/shaders/default.vs", "res/shaders/default.fs");
 	mMesh = new Mesh(shader, vertices, elements);
+	mMesh->position = { 0.1, 0, 0.1 };
 	mFloorMesh = new Mesh(shader, new std::vector<float>{
 			-0.5, 0,  0.5, 0, 0.2, 0,
 			 0.5, 0,  0.5, 0, 0.2, 0,
 			-0.5, 0, -0.5, 0, 0.2, 0,
 			 0.5, 0, -0.5, 0, 0.2, 0
 		}, new std::vector<uint32>{
-			0, 1, 2,
-			1, 3, 2
+			2, 1, 0,
+			2, 3, 1
 	});
 	mCoordinatesMesh = new Mesh(shader, new std::vector<float>{
 			0, 0, 0, 1, 0, 0,
@@ -62,6 +119,26 @@ void MainWindow::setup()
 			4, 5
 	});
 
+	std::vector<float>* cylvertices = new std::vector<float>;
+	std::vector<uint32>* cylelements = new std::vector<uint32>;
+	std::vector<glm::vec3> cylpoints;
+	std::vector<uint32> cylindices;
+	Mesh::generateCylinder(0.5, 0.5, 1, cylpoints, cylindices, 10);
+	for (glm::vec3& p : cylpoints)
+	{
+		cylvertices->push_back(p.x);
+		cylvertices->push_back(p.y);
+		cylvertices->push_back(p.z);
+		cylvertices->push_back(1);
+		cylvertices->push_back(0);
+		cylvertices->push_back(0);
+	}
+	for (uint32 e : cylindices)
+	{
+		cylelements->push_back(e);
+	}
+	mCylinderMesh = new Mesh(shader, cylvertices, cylelements);
+
 	mMesh->setAttribute3f("aPosition", 6, 0);
 	mMesh->setAttribute3f("aColor", 6, 3);
 	mMesh->scale = glm::vec3(0.1, 0.1, 0.1);
@@ -73,20 +150,25 @@ void MainWindow::setup()
 	mCoordinatesMesh->setAttribute3f("aPosition", 6, 0);
 	mCoordinatesMesh->setAttribute3f("aColor", 6, 3);
 
+	mCylinderMesh->setAttribute3f("aPosition", 6, 0);
+	mCylinderMesh->setAttribute3f("aColor", 6, 3);
+	mCylinderMesh->position.x = 1;
+
 	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_CULL_FACE);
 	glClearColor(0.3, 0.3, 0.3, 1.0);
 }
 
 void MainWindow::update(float delta)
 {
 	if (mForward) mPCamera->position += mPCamera->front() * delta;
-	if (mBackward) mPCamera->position -= mPCamera->front() * delta;
-	if (mLeft) mPCamera->position -= mPCamera->right() * delta;
+	if (mBackward) mPCamera->position += mPCamera->back() * delta;
+	if (mLeft) mPCamera->position += mPCamera->left() * delta;
 	if (mRight) mPCamera->position += mPCamera->right() * delta;
 	if (mUp) mPCamera->position += mPCamera->up() * delta;
-	if (mDown) mPCamera->position -= mPCamera->up() * delta;
-	if (mRollLeft) mPCamera->rotation.z += 100 * delta;
-	if (mRollRight) mPCamera->rotation.z -= 100 * delta;
+	if (mDown) mPCamera->position += mPCamera->down() * delta;
+	if (mRollLeft) mPCamera->rotation.z -= 100 * delta;
+	if (mRollRight) mPCamera->rotation.z += 100 * delta;
 
 	if (!showmouse)
 	{
@@ -113,9 +195,10 @@ void MainWindow::draw()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	mMesh->draw(mPCamera, Mesh::LINES);
+	mMesh->draw(mPCamera);
 	mFloorMesh->draw(mPCamera);
 	mCoordinatesMesh->draw(mPCamera, Mesh::LINES);
+	//mCylinderMesh->draw(mPCamera);
 }
 
 void MainWindow::keyboardCallback(int32 key, int32 scancode, int32 action, int32 mods)

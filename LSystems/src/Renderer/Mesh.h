@@ -41,9 +41,10 @@ public:
 	void setUniform3f(const std::string& uniform, const glm::vec3& vec);
 	void setUniform4f(const std::string& uniform, const glm::vec4& vec);
 	void setUniformMatrix4fv(const std::string& uniform, const glm::mat4& mat);
-
 	void setAttribute2f(const std::string& attribute, uint32 vertexSize, uint32 attributeOffset);
 	void setAttribute3f(const std::string& attribute, uint32 vertexSize, uint32 attributeOffset);
+
+	static void generateCylinder(float bottomRadius, float topRadius, float height, std::vector<glm::vec3>& vertices, std::vector<uint32>& elements, uint32 precision=20);
 
 private:
 	uint32 mVAO;

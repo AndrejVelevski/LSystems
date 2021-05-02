@@ -1,11 +1,12 @@
 #include "LSystem.h"
 
-#include <glm/glm.hpp>
-#include <glm/gtc/type_ptr.hpp>
-
 #include <stack>
 #include <sstream>
 
+#include <glm/gtc/type_ptr.hpp>
+
+#include "Renderer/Transform.h"
+#include "Renderer/Mesh.h"
 #include "Utils/Log.h"
 
 LSystem::LSystem()
@@ -60,14 +61,11 @@ void LSystem::generate(int generation, std::vector<float>* vertices, std::vector
 
 	std::string& string = mGenerations[generation];
 
-	glm::vec3 pos(0, 0, 0);
-	glm::vec3 col(1, 1, 1);
+	glm::vec3 color(1, 1, 1);
+	Transform transform;
+	std::stack<Transform> stack;
 
-	glm::vec3 dir(0, 0, 0);
-	std::stack<glm::vec3> posStack;
-	std::stack<glm::vec3> dirStack;
-
-	int currentindex = 0;
+	uint32 currentMaxElement = 0;
 
 	for (char c : string)
 	{
@@ -90,76 +88,86 @@ void LSystem::generate(int generation, std::vector<float>* vertices, std::vector
 			{
 			case Instruction::DRAW:
 			{
-				vertices->push_back(pos.x);
-				vertices->push_back(pos.y);
-				vertices->push_back(pos.z);
+				/*vertices->push_back(transform.position.x);
+				vertices->push_back(transform.position.y);
+				vertices->push_back(transform.position.z);
 
-				vertices->push_back(col.r);
-				vertices->push_back(col.g);
-				vertices->push_back(col.b);
-
-				elements->push_back(currentindex++);
-
-				//pos.x += cos(glm::radians(dir));
-				//pos.y += sin(glm::radians(dir));
-
-				/*U.x = (U.x * cos(yaw) + U.y * sin(yaw));
-				U.y = (U.y * cos(yaw) - U.x * sin(yaw));
-
-				L.x = (L.x * cos(pitch) - L.z * sin(pitch));
-				L.z = (L.x * sin(pitch) + L.z * cos(pitch));
-
-				H.y = (H.y * cos(roll) - H.z * sin(roll));
-				H.z = (H.y * sin(roll) + H.z * cos(roll));
-
-				glm::dvec3 sum = U * L * H;
-				pos.x += sum.x;
-				pos.y += sum.y;
-				pos.z += sum.z;*/
-
-
-				pos.x += cos(glm::radians(dir.z)) * cos(glm::radians(dir.x));
-				pos.y += sin(glm::radians(dir.x));
-				pos.z += sin(glm::radians(dir.z)) * cos(glm::radians(dir.x));
-
-
-				vertices->push_back(pos.x);
-				vertices->push_back(pos.y);
-				vertices->push_back(pos.z);
-
-				vertices->push_back(col.r);
-				vertices->push_back(col.g);
-				vertices->push_back(col.b);
+				vertices->push_back(color.r);
+				vertices->push_back(color.g);
+				vertices->push_back(color.b);
 
 				elements->push_back(currentindex++);
+
+				transform.getModel();
+				transform.position += transform.front() * instruction.second;
+
+				vertices->push_back(transform.position.x);
+				vertices->push_back(transform.position.y);
+				vertices->push_back(transform.position.z);
+
+				vertices->push_back(color.r);
+				vertices->push_back(color.g);
+				vertices->push_back(color.b);
+
+				elements->push_back(currentindex++);*/
+
+				glm::mat4 model = transform.getModel();
+				glm::mat4 rotationMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(90.0f), glm::vec3(1.0, 0.0, 0.0));
+
+				std::vector<glm::vec3> points;
+				std::vector<uint32> indices;
+				Mesh::generateCylinder(0.1, 0.1, instruction.second, points, indices, 10);
+
+				for (glm::vec3& p : points)
+				{
+					glm::vec4 result = model * rotationMatrix * glm::vec4(p.x, p.y, p.z, 1);
+					vertices->push_back(result.x);
+					vertices->push_back(result.y);
+					vertices->push_back(result.z);
+					vertices->push_back(color.r);
+					vertices->push_back(color.g);
+					vertices->push_back(color.b);
+				}
+
+				uint32 startElement = currentMaxElement;
+				for (uint32 i : indices)
+				{
+					uint32 newElement = startElement + i;
+					elements->push_back(newElement);
+
+					if (newElement >= currentMaxElement)
+						currentMaxElement = newElement+1;
+				}
+
+				transform.position += transform.front() * instruction.second;
+
 				break;
 			}
 			case Instruction::MOVE:
-				break;
-			case Instruction::YAW:
-			case Instruction::ROTATEZ:
-				dir.z += instruction.second;
+				transform.getModel();
+				transform.position += transform.front() * instruction.second;
 				break;
 			case Instruction::ROLL:
+			case Instruction::ROTATEZ:
+				transform.rotation.z += instruction.second;
+				break;
+			case Instruction::YAW:
 			case Instruction::ROTATEY:
-				dir.y += instruction.second;
+				transform.rotation.y += instruction.second;
 				break;
 			case Instruction::PITCH:
 			case Instruction::ROTATEX:
-				dir.x += instruction.second;
-				break;
-			case Instruction::TURN:
-				dir += instruction.second;
+				transform.rotation.x += instruction.second;
 				break;
 			case Instruction::PUSH:
-				posStack.push(pos);
-				dirStack.push(dir);
+				stack.push(transform);
 				break;
 			case Instruction::POP:
-				pos = posStack.top();
-				dir = dirStack.top();
-				posStack.pop();
-				dirStack.pop();
+				transform = stack.top();
+				stack.pop();
+				break;
+			case Instruction::SCALE:
+				transform.scale *= instruction.second;
 				break;
 			default:
 				break;
