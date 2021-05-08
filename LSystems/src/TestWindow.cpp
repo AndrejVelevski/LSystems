@@ -6,27 +6,56 @@ TestWindow::TestWindow(uint16 width, uint16 height, const std::string& title) : 
 
 }
 
+Mesh* generateRectangle(Shader* shader)
+{
+	std::vector<float>* vertices = new std::vector<float>{
+		-50, -50,
+		50, -50,
+		-50, 50,
+		50, 50
+	};
+
+	std::vector<uint32>* elements = new std::vector<uint32>{
+		0, 1, 2,
+		1, 3, 2
+	};
+
+	return new Mesh(shader, vertices, elements);
+}
+
 void TestWindow::setup()
 {
 	mCamera = new OrthographicCamera(0, mWidth, 0, mHeight);
 	Shader* shader = new Shader("res/shaders/default2d.vs", "res/shaders/default2d.fs");
-	mMesh = generateDavidStar(shader);
-	mMesh->position.x = mWidth / 2;
-	mMesh->position.y = mHeight / 2;
+	mMesh = generateRectangle(shader);
+	mMesh2 = generateRectangle(shader);
 
 	mMesh->setAttribute2f("aPosition", 2, 0);
+	mMesh2->setAttribute2f("aPosition", 2, 0);
+
+	mMesh->position.x = mWidth / 2;
+	mMesh->position.y = mHeight / 2 + 100;
+
+	mMesh2->position.x = mWidth / 2;
+	mMesh2->position.y = mHeight / 2 -100;
 
 	glClearColor(0.3, 0.3, 0.3, 1.0);
 }
 
 void TestWindow::update(float delta)
 {
+	totalTime += delta;
+	mMesh->rotation.y += 100 * delta;
+	mMesh2->scale.x += delta;
 }
 
 void TestWindow::draw()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
-	mMesh->draw(mCamera, Mesh::LINE_LOOP);
+	mMesh->setUniform3f("uColor", { fmod(totalTime, 1), fmod(totalTime+0.5, 1), fmod(totalTime+0.75, 1) });
+	mMesh->draw(mCamera);
+	mMesh2->setUniform3f("uColor", { fmod(totalTime, 1), 0, 0 });
+	mMesh2->draw(mCamera);
 }
 
 Mesh* TestWindow::generateDavidStar(Shader* shader)

@@ -9,6 +9,12 @@ void MainWindow::setup()
 {
 	//TODO: this should be in the constructor, but glad isn't initialized at that point
 
+	mCamera = new PerspectiveCamera(70, (float)mWidth / (float)mHeight);
+	mCamera->position = { 0, 0.3, 1 };
+	mCamera->rotation.y = 180;
+
+	Shader* shader = new Shader("res/shaders/default.vs", "res/shaders/default.fs");
+
 	/*mLSystem = LSystem(
 		"|F",
 		{
@@ -86,17 +92,21 @@ void MainWindow::setup()
 			{'>', {LSystem::ROLL, -90}},
 		}
 	);*/
-	 
+	
+	//LSystem mesh
 	std::vector<float>* vertices = new std::vector<float>;
 	std::vector<uint32>* elements = new std::vector<uint32>;
-	mLSystem.generate(4, vertices, elements);
+	mLSystem.generate(3, vertices, elements);
 
-	mPCamera = new PerspectiveCamera(70, (float)mWidth / (float)mHeight);
-	mPCamera->position = { 0, 0.3, 1 };
-	mPCamera->rotation.y = 180;
-	Shader* shader = new Shader("res/shaders/default.vs", "res/shaders/default.fs");
-	mMesh = new Mesh(shader, vertices, elements);
-	mMesh->position = { 0.1, 0, 0.1 };
+	mLSystemMesh = new Mesh(shader, vertices, elements);
+	mLSystemMesh->position = { 0.1, 0, 0.1 };
+
+	mLSystemMesh->setAttribute3f("aPosition", 6, 0);
+	mLSystemMesh->setAttribute3f("aColor", 6, 3);
+	mLSystemMesh->scale = glm::vec3(0.1, 0.1, 0.1);
+
+	
+	//Floor mesh
 	mFloorMesh = new Mesh(shader, new std::vector<float>{
 			-0.5, 0,  0.5, 0, 0.2, 0,
 			 0.5, 0,  0.5, 0, 0.2, 0,
@@ -106,6 +116,12 @@ void MainWindow::setup()
 			2, 1, 0,
 			2, 3, 1
 	});
+
+	mFloorMesh->setAttribute3f("aPosition", 6, 0);
+	mFloorMesh->setAttribute3f("aColor", 6, 3);
+	mFloorMesh->position.y = -0.001;
+
+	//Coordinates mesh
 	mCoordinatesMesh = new Mesh(shader, new std::vector<float>{
 			0, 0, 0, 1, 0, 0,
 			1, 0, 0, 1, 0, 0,
@@ -119,41 +135,10 @@ void MainWindow::setup()
 			4, 5
 	});
 
-	std::vector<float>* cylvertices = new std::vector<float>;
-	std::vector<uint32>* cylelements = new std::vector<uint32>;
-	std::vector<glm::vec3> cylpoints;
-	std::vector<uint32> cylindices;
-	Mesh::generateCylinder(0.5, 0.5, 1, cylpoints, cylindices, 10);
-	for (glm::vec3& p : cylpoints)
-	{
-		cylvertices->push_back(p.x);
-		cylvertices->push_back(p.y);
-		cylvertices->push_back(p.z);
-		cylvertices->push_back(1);
-		cylvertices->push_back(0);
-		cylvertices->push_back(0);
-	}
-	for (uint32 e : cylindices)
-	{
-		cylelements->push_back(e);
-	}
-	mCylinderMesh = new Mesh(shader, cylvertices, cylelements);
-
-	mMesh->setAttribute3f("aPosition", 6, 0);
-	mMesh->setAttribute3f("aColor", 6, 3);
-	mMesh->scale = glm::vec3(0.1, 0.1, 0.1);
-
-	mFloorMesh->setAttribute3f("aPosition", 6, 0);
-	mFloorMesh->setAttribute3f("aColor", 6, 3);
-	mFloorMesh->position.y = -0.001;
-
 	mCoordinatesMesh->setAttribute3f("aPosition", 6, 0);
 	mCoordinatesMesh->setAttribute3f("aColor", 6, 3);
 
-	mCylinderMesh->setAttribute3f("aPosition", 6, 0);
-	mCylinderMesh->setAttribute3f("aColor", 6, 3);
-	mCylinderMesh->position.x = 1;
-
+	//GL settings
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
 	glClearColor(0.3, 0.3, 0.3, 1.0);
@@ -161,32 +146,21 @@ void MainWindow::setup()
 
 void MainWindow::update(float delta)
 {
-	if (mForward) mPCamera->position += mPCamera->front() * delta;
-	if (mBackward) mPCamera->position += mPCamera->back() * delta;
-	if (mLeft) mPCamera->position += mPCamera->left() * delta;
-	if (mRight) mPCamera->position += mPCamera->right() * delta;
-	if (mUp) mPCamera->position += mPCamera->up() * delta;
-	if (mDown) mPCamera->position += mPCamera->down() * delta;
-	if (mRollLeft) mPCamera->rotation.z -= 100 * delta;
-	if (mRollRight) mPCamera->rotation.z += 100 * delta;
+	if (mForward) mCamera->position += mCamera->front() * delta;
+	if (mBackward) mCamera->position += mCamera->back() * delta;
+	if (mLeft) mCamera->position += mCamera->left() * delta;
+	if (mRight) mCamera->position += mCamera->right() * delta;
+	if (mUp) mCamera->position += mCamera->up() * delta;
+	if (mDown) mCamera->position += mCamera->down() * delta;
+	if (mRollLeft) mCamera->rotation.z -= 100 * delta;
+	if (mRollRight) mCamera->rotation.z += 100 * delta;
 
 	if (!showmouse)
 	{
-		mPCamera->rotation.x += (mouse.y - mouseLast.y) * 10 * delta;
-		mPCamera->rotation.y -= (mouse.x - mouseLast.x) * 10 * delta;
+		mCamera->rotation.x += (mouse.y - mouseLast.y) * 10 * delta;
+		mCamera->rotation.y -= (mouse.x - mouseLast.x) * 10 * delta;
 	}
-	mPCamera->aspect = (float)mWidth / (float)mHeight;
-
-	//Log::info("%d %d", mWidth, mHeight);
-	//mMesh->position = { 1,0,0 };
-	//mMesh->position = { mWidth / 2, mHeight / 2, 0 };
-	//mMesh->rotation.y += 100 * delta;
-
-	//mFloorMesh->rotation.y = 90;
-	//mFloorMesh->rotation.x += 100*delta;
-
-	//mCoordinatesMesh->rotation.y = 90;
-	//mCoordinatesMesh->rotation.x += 100 * delta;
+	mCamera->aspect = (float)mWidth / (float)mHeight;
 
 	mouseLast = mouse;
 }
@@ -195,16 +169,13 @@ void MainWindow::draw()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	mMesh->draw(mPCamera);
-	mFloorMesh->draw(mPCamera);
-	mCoordinatesMesh->draw(mPCamera, Mesh::LINES);
-	//mCylinderMesh->draw(mPCamera);
+	mLSystemMesh->draw(mCamera);
+	mFloorMesh->draw(mCamera);
+	mCoordinatesMesh->draw(mCamera, Mesh::LINES);
 }
 
 void MainWindow::keyboardCallback(int32 key, int32 scancode, int32 action, int32 mods)
 {
-	//Log::info("(%s): %d %d %d %d", mTitle, key, scancode, action, mods);
-
 	     if (key == GLFW_KEY_W && action == GLFW_PRESS) mForward = true;
 	else if (key == GLFW_KEY_S && action == GLFW_PRESS) mBackward = true;
 	else if (key == GLFW_KEY_A && action == GLFW_PRESS) mLeft = true;
@@ -237,7 +208,7 @@ void MainWindow::keyboardCallback(int32 key, int32 scancode, int32 action, int32
 
 void MainWindow::mouseButtonsCallback(int32 button, int32 action, int32 mods)
 {
-	//Log::info("(%s): %d %d %d", mTitle, button, action, mods);
+	
 }
 
 void MainWindow::mousePositionCallback(double xpos, double ypos)
@@ -248,5 +219,5 @@ void MainWindow::mousePositionCallback(double xpos, double ypos)
 
 void MainWindow::mouseEnteredCallback(int32 entered)
 {
-	//Log::info("(%s): %d", mTitle, entered);
+	
 }

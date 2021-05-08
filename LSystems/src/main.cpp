@@ -8,10 +8,9 @@ int main(int argc, char** argv)
 	int height = 768;
 	MainWindow** windows = new MainWindow*[numWindows];
 
-    //TestWindow* w = new TestWindow(width, height, "Test");
-    //w->exec();
-	//w->waitForFinished();
-    
+    /*TestWindow* w = new TestWindow(width, height, "Test");
+    w->exec();
+	w->waitForFinished();*/
 
 	for (int i = 0; i < numWindows; ++i)
 	{

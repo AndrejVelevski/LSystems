@@ -20,6 +20,8 @@ private:
 	Mesh* generateDavidStar(Shader* shader);
 
 	OrthographicCamera* mCamera;
+	float totalTime = 0;
 	Mesh* mMesh;
+	Mesh* mMesh2;
 };
 

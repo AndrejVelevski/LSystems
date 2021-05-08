@@ -23,11 +23,10 @@ private:
 	void mousePositionCallback(double xpos, double ypos) override;
 	void mouseEnteredCallback(int32 entered) override;
 
-	Mesh* mMesh;
+	Mesh* mLSystemMesh;
 	Mesh* mFloorMesh;
 	Mesh* mCoordinatesMesh;
-	Mesh* mCylinderMesh;
-	PerspectiveCamera* mPCamera;
+	PerspectiveCamera* mCamera;
 	LSystem mLSystem;
 
 	bool mForward = false;

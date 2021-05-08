@@ -88,29 +88,6 @@ void LSystem::generate(int generation, std::vector<float>* vertices, std::vector
 			{
 			case Instruction::DRAW:
 			{
-				/*vertices->push_back(transform.position.x);
-				vertices->push_back(transform.position.y);
-				vertices->push_back(transform.position.z);
-
-				vertices->push_back(color.r);
-				vertices->push_back(color.g);
-				vertices->push_back(color.b);
-
-				elements->push_back(currentindex++);
-
-				transform.getModel();
-				transform.position += transform.front() * instruction.second;
-
-				vertices->push_back(transform.position.x);
-				vertices->push_back(transform.position.y);
-				vertices->push_back(transform.position.z);
-
-				vertices->push_back(color.r);
-				vertices->push_back(color.g);
-				vertices->push_back(color.b);
-
-				elements->push_back(currentindex++);*/
-
 				glm::mat4 model = transform.getModel();
 				glm::mat4 rotationMatrix = glm::rotate(glm::mat4(1.0f), glm::radians(90.0f), glm::vec3(1.0, 0.0, 0.0));
 
