@@ -13,10 +13,9 @@ public:
 	Shader(const std::string& vertexSource, const std::string& fragmentSource);
 	~Shader();
 
-	uint32 getId();
+	uint32 getId() const;
 
 	void bind() const;
-	void unbind() const;
 
 private:
 	static uint32 compileShader(uint32 type, const std::string& source);

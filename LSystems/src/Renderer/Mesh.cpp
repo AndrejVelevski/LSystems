@@ -59,6 +59,7 @@ void Mesh::draw(ICamera* camera, Mode mode)
 
 void Mesh::setUniform1i(const std::string& uniform, int32 i)
 {
+	mShader->bind();
 	auto iterator = mUniforms.find(uniform);
 	if (iterator != mUniforms.end())
 	{
@@ -74,6 +75,7 @@ void Mesh::setUniform1i(const std::string& uniform, int32 i)
 
 void Mesh::setUniform1f(const std::string& uniform, float f)
 {
+	mShader->bind();
 	auto iterator = mUniforms.find(uniform);
 	if (iterator != mUniforms.end())
 	{
@@ -89,6 +91,7 @@ void Mesh::setUniform1f(const std::string& uniform, float f)
 
 void Mesh::setUniform2f(const std::string& uniform, const glm::vec2& vec)
 {
+	mShader->bind();
 	auto iterator = mUniforms.find(uniform);
 	if (iterator != mUniforms.end())
 	{
@@ -104,6 +107,7 @@ void Mesh::setUniform2f(const std::string& uniform, const glm::vec2& vec)
 
 void Mesh::setUniform3f(const std::string& uniform, const glm::vec3& vec)
 {
+	mShader->bind();
 	auto iterator = mUniforms.find(uniform);
 	if (iterator != mUniforms.end())
 	{
@@ -119,6 +123,7 @@ void Mesh::setUniform3f(const std::string& uniform, const glm::vec3& vec)
 
 void Mesh::setUniform4f(const std::string& uniform, const glm::vec4& vec)
 {
+	mShader->bind();
 	auto iterator = mUniforms.find(uniform);
 	if (iterator != mUniforms.end())
 	{

@@ -9,90 +9,165 @@ TestWindow::TestWindow(uint16 width, uint16 height, const std::string& title) : 
 Mesh* generateRectangle(Shader* shader)
 {
 	std::vector<float>* vertices = new std::vector<float>{
-		-50, -50,
-		50, -50,
-		-50, 50,
-		50, 50
+		0,     0, 1, 1, 1, 0, 0,
+		3789,  0, 1, 1, 1, 1, 0,
+		0,    64, 1, 1, 1, 0, 1,
+		3789, 64, 1, 1, 1, 1, 1
 	};
+
+	/*std::vector<float>* vertices = new std::vector<float>{
+		0,     0, 0, 0,
+		44*10,  0, 1, 0,
+		0,    46 * 10, 0, 1,
+		44 * 10, 46 * 10, 1, 1
+	};*/
 
 	std::vector<uint32>* elements = new std::vector<uint32>{
 		0, 1, 2,
 		1, 3, 2
 	};
 
-	return new Mesh(shader, vertices, elements);
+	Mesh* mesh = new Mesh(shader, vertices, elements);
+
+	mesh->setAttribute2f("aPosition", 7, 0);
+	mesh->setAttribute3f("aColor", 7, 2);
+	mesh->setAttribute2f("aTexCoords", 7, 5);
+
+	return mesh;
 }
 
 void TestWindow::setup()
 {
-	mCamera = new OrthographicCamera(0, mWidth, 0, mHeight);
-	Shader* shader = new Shader("res/shaders/default2d.vs", "res/shaders/default2d.fs");
-	mMesh = generateRectangle(shader);
-	mMesh2 = generateRectangle(shader);
+	mCamera = new OrthographicCamera(0, 0, width(), height());
+	mTexture = new Texture("res/textures/tiles.png");
+	mFont = new Font("res/fonts/VIVALDII.TTF", 64);
+	mMesh = generateRectangle(new Shader("res/shaders/default2d.vert", "res/shaders/default2d.frag"));
+	{
+		std::vector<float>* vertices = new std::vector<float>;
+		std::vector<uint32>* elements = new std::vector<uint32>;
 
-	mMesh->setAttribute2f("aPosition", 2, 0);
-	mMesh2->setAttribute2f("aPosition", 2, 0);
+		float xpos = 0;
+		float ypos = 0;
+		int element = 0;
 
-	mMesh->position.x = mWidth / 2;
-	mMesh->position.y = mHeight / 2 + 100;
+		std::string str = "Hello world!\nThe quick brown fox\njumps over the lazy dog\n0123456789\n!@#$%^&*()\n-_=+\n[]{};':\",./<>?\|`~/|\\";
 
-	mMesh2->position.x = mWidth / 2;
-	mMesh2->position.y = mHeight / 2 -100;
+		for (char c : str)
+		{
+			if (c == '\n')
+			{
+				xpos = 0;
+				ypos += mFont->fontSize();
+				continue;
+			}
+
+			glm::ivec2 bearing = mFont->bearing(c);
+			glm::ivec2 size = mFont->size(c);
+			glm::vec2 tl = mFont->texCoordsTL(c);
+			glm::vec2 tr = mFont->texCoordsTR(c);
+			glm::vec2 bl = mFont->texCoordsBL(c);
+			glm::vec2 br = mFont->texCoordsBR(c);
+
+			float x = xpos + bearing.x;
+			float y = ypos + mFont->fontSize() - bearing.y;
+			float w = size.x;
+			float h = size.y;
+
+			glm::vec3 color;
+
+			color.x = (float)rand() / RAND_MAX;
+			color.y = (float)rand() / RAND_MAX;
+			color.z = (float)rand() / RAND_MAX;
+
+			vertices->push_back(x);
+			vertices->push_back(y);
+			vertices->push_back(color.x);
+			vertices->push_back(color.y);
+			vertices->push_back(color.z);
+			vertices->push_back(tl.x);
+			vertices->push_back(tl.y);
+
+			color.x = (float)rand() / RAND_MAX;
+			color.y = (float)rand() / RAND_MAX;
+			color.z = (float)rand() / RAND_MAX;
+
+			vertices->push_back(x+w);
+			vertices->push_back(y);
+			vertices->push_back(color.x);
+			vertices->push_back(color.y);
+			vertices->push_back(color.z);
+			vertices->push_back(tr.x);
+			vertices->push_back(tr.y);
+
+			color.x = (float)rand() / RAND_MAX;
+			color.y = (float)rand() / RAND_MAX;
+			color.z = (float)rand() / RAND_MAX;
+
+			vertices->push_back(x);
+			vertices->push_back(y+h);
+			vertices->push_back(color.x);
+			vertices->push_back(color.y);
+			vertices->push_back(color.z);
+			vertices->push_back(bl.x);
+			vertices->push_back(bl.y);
+
+			color.x = (float)rand() / RAND_MAX;
+			color.y = (float)rand() / RAND_MAX;
+			color.z = (float)rand() / RAND_MAX;
+
+			vertices->push_back(x+w);
+			vertices->push_back(y+h);
+			vertices->push_back(color.x);
+			vertices->push_back(color.y);
+			vertices->push_back(color.z);
+			vertices->push_back(br.x);
+			vertices->push_back(br.y);
+
+			elements->push_back(element + 0);
+			elements->push_back(element + 1);
+			elements->push_back(element + 2);
+
+			elements->push_back(element + 1);
+			elements->push_back(element + 3);
+			elements->push_back(element + 2);
+
+			xpos += (mFont->advance(c) >> 6);
+			element += 4;
+		}
+
+		mTextMesh = new Mesh(new Shader("res/shaders/default2d.vert", "res/shaders/default2d.frag"), vertices, elements);
+		mTextMesh->setAttribute2f("aPosition", 7, 0);
+		mTextMesh->setAttribute3f("aColor", 7, 2);
+		mTextMesh->setAttribute2f("aTexCoords", 7, 5);
+		mTextMesh->position.x = 100;
+		mTextMesh->position.y = 100;
+	}
+
+	//mMesh->position.x = -1000;
+	//mMesh->position.y = mHeight / 2;
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	glClearColor(0.3, 0.3, 0.3, 1.0);
 }
 
 void TestWindow::update(float delta)
 {
-	totalTime += delta;
-	mMesh->rotation.y += 100 * delta;
-	mMesh2->scale.x += delta;
+	mMesh->position.x -= delta*100;
 }
 
 void TestWindow::draw()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
-	mMesh->setUniform3f("uColor", { fmod(totalTime, 1), fmod(totalTime+0.5, 1), fmod(totalTime+0.75, 1) });
+	//mTexture->bind();
+	mFont->texture()->bind();
+	mMesh->setUniform3f("uColor", { 1, 0, 0 });
+	mMesh->setUniform1i("uTexture", 0);
 	mMesh->draw(mCamera);
-	mMesh2->setUniform3f("uColor", { fmod(totalTime, 1), 0, 0 });
-	mMesh2->draw(mCamera);
-}
 
-Mesh* TestWindow::generateDavidStar(Shader* shader)
-{
-	std::vector<float>* vertices = new std::vector<float>;
-
-	double outerRadius = 200;
-	double innerRadius = outerRadius / (sqrt(15)/3);
-	//double innerRadius = 154;
-	double rotation = -90;
-	int points = 16;
-
-	for (int i = 0; i <points; i += 2)
-	{
-		double outerAngle1 = (i * 360) / points + rotation;
-		double innerAngle = ((i + 1) * 360) / points + rotation;
-		double outerAngle2 = ((i + 2) * 360) / points + rotation;
-
-		double x1 = outerRadius * cos(glm::radians(outerAngle1));
-		double y1 = outerRadius * sin(glm::radians(outerAngle1));
-		double x2 = innerRadius * cos(glm::radians(innerAngle));
-		double y2 = innerRadius * sin(glm::radians(innerAngle));
-		double x3 = outerRadius * cos(glm::radians(outerAngle2));
-		double y3 = outerRadius * sin(glm::radians(outerAngle2));
-
-		vertices->push_back(x1);
-		vertices->push_back(y1);
-
-		vertices->push_back(x2);
-		vertices->push_back(y2);
-
-		vertices->push_back(x2);
-		vertices->push_back(y2);
-
-		vertices->push_back(x3);
-		vertices->push_back(y3);
-	}	
-
-	return new Mesh(shader, vertices, nullptr);
+	mFont->texture()->bind();
+	mTextMesh->setUniform3f("uColor", { 1, 0, 0 });
+	mTextMesh->setUniform1i("uTexture", 0);
+	mTextMesh->draw(mCamera);
 }

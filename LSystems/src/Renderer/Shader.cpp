@@ -56,7 +56,7 @@ Shader::~Shader()
 	glDeleteProgram(mId);
 }
 
-uint32 Shader::getId()
+uint32 Shader::getId() const
 {
 	return mId;
 }
@@ -64,11 +64,6 @@ uint32 Shader::getId()
 void Shader::bind() const
 {
 	glUseProgram(mId);
-}
-
-void Shader::unbind() const
-{
-	glUseProgram(0);
 }
 
 uint32 Shader::compileShader(uint32 type, const std::string& source)

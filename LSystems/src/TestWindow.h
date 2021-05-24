@@ -5,7 +5,8 @@
 #include "Renderer/Mesh.h"
 #include "Renderer/Shader.h"
 #include "Renderer/OrthographicCamera.h"
-
+#include "Renderer/Texture.h"
+#include "Renderer/Font.h"
 
 class TestWindow : public Window
 {
@@ -17,11 +18,10 @@ private:
 	virtual void update(float delta) override;
 	virtual void draw() override;
 
-	Mesh* generateDavidStar(Shader* shader);
-
 	OrthographicCamera* mCamera;
-	float totalTime = 0;
 	Mesh* mMesh;
-	Mesh* mMesh2;
+	Texture* mTexture;
+	Font* mFont;
+	Mesh* mTextMesh;
 };
 

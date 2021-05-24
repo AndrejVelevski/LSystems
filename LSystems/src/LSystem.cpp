@@ -64,6 +64,9 @@ void LSystem::generate(int generation, std::vector<float>* vertices, std::vector
 	glm::vec3 color(1, 1, 1);
 	Transform transform;
 	std::stack<Transform> stack;
+	std::stack<float> stackScale;
+	float scale = 1;
+	float scaleModifier = 0.7;
 
 	uint32 currentMaxElement = 0;
 
@@ -93,7 +96,7 @@ void LSystem::generate(int generation, std::vector<float>* vertices, std::vector
 
 				std::vector<glm::vec3> points;
 				std::vector<uint32> indices;
-				Mesh::generateCylinder(0.1, 0.1, instruction.second, points, indices, 10);
+				Mesh::generateCylinder(0.1*scale, 0.1*scale*scaleModifier, instruction.second*scale, points, indices, 10);
 
 				for (glm::vec3& p : points)
 				{
@@ -116,13 +119,15 @@ void LSystem::generate(int generation, std::vector<float>* vertices, std::vector
 						currentMaxElement = newElement+1;
 				}
 
-				transform.position += transform.front() * instruction.second;
+				transform.position += transform.front() * instruction.second*scale;
+				scale *= scaleModifier;
 
 				break;
 			}
 			case Instruction::MOVE:
 				transform.getModel();
 				transform.position += transform.front() * instruction.second;
+				scale *= scaleModifier;
 				break;
 			case Instruction::ROLL:
 			case Instruction::ROTATEZ:
@@ -138,10 +143,13 @@ void LSystem::generate(int generation, std::vector<float>* vertices, std::vector
 				break;
 			case Instruction::PUSH:
 				stack.push(transform);
+				stackScale.push(scale);
 				break;
 			case Instruction::POP:
 				transform = stack.top();
 				stack.pop();
+				scale = stackScale.top();
+				stackScale.pop();
 				break;
 			case Instruction::SCALE:
 				transform.scale *= instruction.second;
