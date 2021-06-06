@@ -33,7 +33,7 @@ public:
 	~Mesh();
 
 	void updateData(uint32 index, uint32 count);
-	void draw(ICamera* camera, Mode mode=Mode::TRIANGLES);
+	void draw(ICamera* camera, Mode mode = Mode::TRIANGLES);
 
 	void setUniform1i(const std::string& uniform, int32 i);
 	void setUniform1f(const std::string& uniform, float f);

@@ -2,6 +2,15 @@
 
 #include "Utils/Utils.h"
 
+#include <unordered_map>
+#include <fstream>
+
+int wWidth = 160;
+int wHeight = 20;
+
+int margin = 10;
+int spacing = wHeight + margin;
+
 MainWindow::MainWindow(uint16 width, uint16 height, const std::string& title) : Window(width, height, title)
 {
 
@@ -19,6 +28,13 @@ MainWindow::~MainWindow()
 	delete mButtonGenerate;
 	delete mLabelAxiom;
 	delete mTextEditAxiom;
+	delete mTrackPad;
+
+	for (TextEdit* textEdit : mTextEditRules)
+		delete textEdit;
+
+	for (TextEdit* textEdit : mTextEditInstructions)
+		delete textEdit;
 }
 
 void MainWindow::setup()
@@ -31,125 +47,131 @@ void MainWindow::setup()
 
 	mGUICamera = new OrthographicCamera(0, 0, width(), height());
 
-	mFont = new Font("res/fonts/arial.ttf", 16);
+	mFont = new Font("res/fonts/arial.ttf", 12);
 
 	//GUI
-
-	int wWidth = 100;
-	int wHeight = 30;
-
-	int spacing = 50;
-	int margin = 20;
 	int idx = 0;
 
-	mLabelAxiom = new Label(wWidth, wHeight, margin, margin + spacing * idx, "Axiom:", mFont, Label::HAlign::RIGHT);
-	mLabelAxiom->setColor({ 1, 1, 1 });
-	mTextEditAxiom = new TextEdit(6 * wWidth, wHeight, 2 * margin + wWidth, margin + spacing * idx, mFont);
-	mLabelInstructions = new Label(wWidth, wHeight, 7*wWidth + 3*margin, margin + spacing * idx, "Instructions:", mFont, Label::HAlign::LEFT);
-	mLabelInstructions->setColor({ 1, 1, 1 });
-	mButtonGenerate = new Button(wWidth, wHeight, 8 * wWidth + 4 * margin, margin + spacing * idx, "Generate", mFont);
+	mLabelAxiom = new Label(wWidth/4, wHeight, margin, margin + spacing * idx, "Axiom:", mFont, Label::HAlign::RIGHT);
+	mTextEditAxiom = new TextEdit(3 * wWidth, wHeight, 2 * margin + wWidth - wWidth * 0.75, margin + spacing * idx, mFont);
+	mLabelInstructions = new Label(wWidth, wHeight, 4*wWidth + 3*margin - wWidth * 0.75, margin + spacing * idx, "Instructions:", mFont, Label::HAlign::LEFT);
+	mButtonAutoGenerate = new Button(wWidth, wHeight, 5 * wWidth + 4 * margin - wWidth * 0.75, margin + spacing * idx, "Auto-generate: on", mFont);
+	mButtonGenerate = new Button(wWidth, wHeight, 6 * wWidth + 5 * margin - wWidth * 0.75, margin + spacing * idx, "Generate", mFont);
 	mButtonGenerate->setColor({ 0.9, 0.9, 0.9 });
 
 	++idx;
 
-	mLabelRules = new Label(wWidth, wHeight, margin, margin + spacing * idx, "Rules:", mFont, Label::HAlign::RIGHT);
-	mLabelRules->setColor({ 1, 1, 1 });
+	mLabelRules = new Label(wWidth/4, wHeight, margin, margin + spacing * idx, "Rules:", mFont, Label::HAlign::RIGHT);
+
+	mButtonOpen = new Button(wWidth, wHeight, 5 * wWidth + 4 * margin - wWidth * 0.75, margin + spacing * idx, "Open", mFont);
+	mButtonCoordinateSystem = new Button(wWidth, wHeight, 6 * wWidth + 5 * margin - wWidth * 0.75, margin + spacing * idx, "Show coordinate system", mFont);
 
 	++idx;
 
-	
+	mLabelGenerations = new Label(wWidth, wHeight, 5 * wWidth + 4 * margin - wWidth * 0.75, margin + spacing * idx, "Generations:", mFont, Label::HAlign::RIGHT);
+	mTextEditGenerations = new TextEdit(wWidth, wHeight, 6 * wWidth + 5 * margin - wWidth * 0.75, margin + spacing * idx, mFont);
+	mTextEditGenerations->setText("3");
+
+	++idx;
+
+	mLabelLineThickness = new Label(wWidth, wHeight, 5 * wWidth + 4 * margin - wWidth * 0.75, margin + spacing * idx, "Line thickness:", mFont, Label::HAlign::RIGHT);
+	mTextEditLineThickness = new TextEdit(wWidth, wHeight, 6 * wWidth + 5 * margin - wWidth * 0.75, margin + spacing * idx, mFont);
+	mTextEditLineThickness->setText("0.1");
+
+	++idx;
+
+	mLabelLineThicknessModifier = new Label(wWidth, wHeight, 5 * wWidth + 4 * margin - wWidth * 0.75, margin + spacing * idx, "Line thickness modifier:", mFont, Label::HAlign::RIGHT);
+	mTextEditLineThicknessModifier = new TextEdit(wWidth, wHeight, 6 * wWidth + 5 * margin - wWidth * 0.75, margin + spacing * idx, mFont);
+	mTextEditLineThicknessModifier->setText("1");
+
+	++idx;
+
+	mLabelLineLengthModifier = new Label(wWidth, wHeight, 5 * wWidth + 4 * margin - wWidth * 0.75, margin + spacing * idx, "Line length modifier:", mFont, Label::HAlign::RIGHT);
+	mTextEditLineLengthModifier = new TextEdit(wWidth, wHeight, 6 * wWidth + 5 * margin - wWidth * 0.75, margin + spacing * idx, mFont);
+	mTextEditLineLengthModifier->setText("1");
+
+	++idx;
+
+	mLabelPruneChance = new Label(wWidth, wHeight, 5 * wWidth + 4 * margin - wWidth * 0.75, margin + spacing * idx, "Prune chance:", mFont, Label::HAlign::RIGHT);
+	mTextEditPruneChance = new TextEdit(wWidth, wHeight, 6 * wWidth + 5 * margin - wWidth * 0.75, margin + spacing * idx, mFont);
+	mTextEditPruneChance->setText("0");
+
+	++idx;
+
+	mLabelMutationChance = new Label(wWidth, wHeight, 5 * wWidth + 4 * margin - wWidth * 0.75, margin + spacing * idx, "Mutation chance:", mFont, Label::HAlign::RIGHT);
+	mTextEditMutationChance = new TextEdit(wWidth, wHeight, 6 * wWidth + 5 * margin - wWidth * 0.75, margin + spacing * idx, mFont);
+	mTextEditMutationChance->setText("0");
+
+	++idx;
+
+	mLabelMutationFactor = new Label(wWidth, wHeight, 5 * wWidth + 4 * margin - wWidth * 0.75, margin + spacing * idx, "Mutation factor:", mFont, Label::HAlign::RIGHT);
+	mTextEditMutationFactor = new TextEdit(wWidth, wHeight, 6 * wWidth + 5 * margin - wWidth * 0.75, margin + spacing * idx, mFont);
+	mTextEditMutationFactor->setText("0");
+
+	++idx;
+
+	mTrackPad = new TrackPad(wWidth, wWidth, 5 * wWidth + 4 * margin - wWidth * 0.75, margin + spacing * idx);
+
+	mButtonLightingEnabled = new Button(wWidth, wHeight, 6 * wWidth + 5 * margin - wWidth * 0.75, margin + spacing * idx, "Lighting: on", mFont);
+
+	++idx;
+
+	mButtonDrawMode = new Button(wWidth, wHeight, 6 * wWidth + 5 * margin - wWidth * 0.75, margin + spacing * idx, "Draw: Mesh", mFont);
+
+	idx += 5;
+
+	std::string info =
+		"Controls:\n\n"
+		"W - Forwards\n"
+		"S - Backwards\n"
+		"A - Left\n"
+		"D - Right\n"
+		"Q - Roll left\n"
+		"E - Roll right\n"
+		"Space - Up\n"
+		"Ctrl - Down\n\n"
+		"Enter - Toggle between camera mode and UI\n"
+		"R - Reset camera to default position and orientation\n"
+		"T - Generate L-System";
+	mLabelInfo = new Label(2*wWidth+margin, wHeight, 5 * wWidth + 4 * margin - wWidth * 0.75, margin + spacing * idx, info, mFont, Label::HAlign::LEFT, Label::VAlign::TOP);
+
+	for (int i=0;i<11;++i)
+		mTextEditInstructions.push_back(new TextEdit(wWidth, wHeight, 4 * wWidth + 3 * margin - wWidth * 0.75, margin + spacing * (i + 1), mFont));
+	mTextEditInstructions[0]->setText("F: DRAW, 1");
+	mTextEditInstructions[1]->setText("f: MOVE, 1");
+	mTextEditInstructions[2]->setText("[: PUSH, 0");
+	mTextEditInstructions[3]->setText("]: POP, 0");
+	mTextEditInstructions[4]->setText("v: PITCH, 30");
+	mTextEditInstructions[5]->setText("^: PITCH, -30");
+	mTextEditInstructions[6]->setText("+: YAW, 30");
+	mTextEditInstructions[7]->setText("-: YAW, -30");
+	mTextEditInstructions[8]->setText("<: ROLL, 30");
+	mTextEditInstructions[9]->setText(">: ROLL, -30");
+	mTextEditInstructions[10]->setText("|: PITCH, -90");
 
 	//END GUI
 
-	/*mLSystem = LSystem(
-		"|F",
-		{
-			{'F', "F[Fz[zFZXFZYF]Z[ZFxzFyzF]]"}
-		},
-		{
-			{'F', {LSystem::DRAW, 1}},
-			{'x', {LSystem::ROTATEX, 23}},
-			{'y', {LSystem::ROTATEY, 23}},
-			{'z', {LSystem::ROTATEZ, 23}},
-			{'X', {LSystem::ROTATEX, -23}},
-			{'Y', {LSystem::ROTATEY, -23}},
-			{'Z', {LSystem::ROTATEZ, -23}},
-			{'[', {LSystem::PUSH, 0}},
-			{']', {LSystem::POP, 0}},
-			{'|', {LSystem::PITCH, -90}}
-		}
-	);*/
+	mLSystemMesh = new Mesh(new Shader("res/shaders/phong.vert", "res/shaders/phong.frag"), nullptr, nullptr);
 
-	/*mLSystem = LSystem( //stairs
-		"A",
-		{
-			{'A', "G+F+G+F+^HvG[vH]+F[vH]+G[vH]+[F]+RA"}
-		},
-		{
-			{'F', {LSystem::DRAW, 1}},
-			{'f', {LSystem::MOVE, 1}},
-			{'G', {LSystem::DRAW, 4}},
-			{'H', {LSystem::DRAW, 0.5}},
-			{'[', {LSystem::PUSH, 0}},
-			{']', {LSystem::POP, 0}},
-			{'v', {LSystem::PITCH, 90}},
-			{'^', {LSystem::PITCH, -90}},
-			{'+', {LSystem::YAW, 90}},
-			{'-', {LSystem::YAW, -90}},
-			{'R', {LSystem::YAW, 1}},
-		}
-	);*/
-
-	mLSystem = LSystem( //tree
-		"|F",
-		{
-			{'F', "F<+[vvFvF^F]>-[^FvvF]"}
-		},
-		{
-			{'F', {LSystem::DRAW, 5}},
-			{'[', {LSystem::PUSH, 0}},
-			{']', {LSystem::POP, 0}},
-			{'v', {LSystem::PITCH, 20}},
-			{'^', {LSystem::PITCH, -20}},
-			{'+', {LSystem::YAW, 40}},
-			{'-', {LSystem::YAW, -40}},
-			{'<', {LSystem::ROLL, 40}},
-			{'>', {LSystem::ROLL, -40}},
-
-			{'|', {LSystem::PITCH, -90}}
-		}
-	);
-
-	//LSystem mesh
-	std::vector<float>* vertices = new std::vector<float>;
-	std::vector<uint32>* elements = new std::vector<uint32>;
-	mLSystem.generate(4, vertices, elements);
-
-	mLSystemMesh = new Mesh(new Shader("res/shaders/default.vert", "res/shaders/default.frag"), vertices, elements);
-	mLSystemMesh->position = { 0.1, 0, 0.1 };
-
-	mLSystemMesh->setAttribute3f("aPosition", 6, 0);
-	mLSystemMesh->setAttribute3f("aColor", 6, 3);
-	mLSystemMesh->scale = glm::vec3(0.1, 0.1, 0.1);
-
-	
 	//Floor mesh
-	mFloorMesh = new Mesh(new Shader("res/shaders/default.vert", "res/shaders/default.frag"), new std::vector<float>{
-			-0.5, 0,  0.5, 0, 0.2, 0,
-			 0.5, 0,  0.5, 0, 0.2, 0,
-			-0.5, 0, -0.5, 0, 0.2, 0,
-			 0.5, 0, -0.5, 0, 0.2, 0
+	mFloorMesh = new Mesh(new Shader("res/shaders/phong.vert", "res/shaders/phong.frag"), new std::vector<float>{
+			-0.5, 0,  0.5, 0, 1, 0, 0, 0.2, 0,
+			 0.5, 0,  0.5, 0, 1, 0, 0, 0.2, 0,
+			-0.5, 0, -0.5, 0, 1, 0, 0, 0.2, 0,
+			 0.5, 0, -0.5, 0, 1, 0, 0, 0.2, 0
 		}, new std::vector<uint32>{
-			2, 1, 0,
-			2, 3, 1
+			2, 0, 1,
+			2, 1, 3
 	});
 
-	mFloorMesh->setAttribute3f("aPosition", 6, 0);
-	mFloorMesh->setAttribute3f("aColor", 6, 3);
+	mFloorMesh->setAttribute3f("aPosition", 9, 0);
+	mFloorMesh->setAttribute3f("aNormal", 9, 3);
+	mFloorMesh->setAttribute3f("aColor", 9, 6);
+	mFloorMesh->setUniform3f("uColor", { 1, 1 ,1 });
 	mFloorMesh->position.y = -0.001;
 
 	//Coordinates mesh
-	mCoordinatesMesh = new Mesh(new Shader("res/shaders/default.vert", "res/shaders/default.frag"), new std::vector<float>{
+	mCoordinatesMesh = new Mesh(new Shader("res/shaders/phong.vert", "res/shaders/phong.frag"), new std::vector<float>{
 			0, 0, 0, 1, 0, 0,
 			1, 0, 0, 1, 0, 0,
 			0, 0, 0, 0, 1, 0,
@@ -168,10 +190,9 @@ void MainWindow::setup()
 	//GL settings
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
-
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glClearColor(0.3, 0.3, 0.3, 1.0);
+	glClearColor(0.5, 0.5, 0.5, 1.0);
 }
 
 void MainWindow::update(float delta)
@@ -187,10 +208,16 @@ void MainWindow::update(float delta)
 
 	if (!showmouse)
 	{
+		setCursorPosition(mouse.x, mouse.y);
 		mCamera->rotation.x += (mouse.y - mouseLast.y) * 10 * delta;
 		mCamera->rotation.y -= (mouse.x - mouseLast.x) * 10 * delta;
 	}
-	mCamera->aspect = (float)width() / (float)height();
+
+	float aspect = (float)width() / (float)height();
+	if (isnan(aspect))
+		aspect = 1;
+
+	mCamera->aspect = aspect;
 	mGUICamera->right = width();
 	mGUICamera->bottom = height();
 
@@ -200,11 +227,60 @@ void MainWindow::update(float delta)
 
 void MainWindow::draw()
 {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	mLSystemMesh->draw(mCamera);
+	bool lighting = mButtonLightingEnabled->text() == "Lighting: on";
+
+	glDisable(GL_CULL_FACE);
+	mFloorMesh->setUniform1i("uLightingEnabled", lighting);
+	mFloorMesh->setUniform3f("uLight.direction", { mTrackPad->getTrackerPosition().x, -1, mTrackPad->getTrackerPosition().y});
 	mFloorMesh->draw(mCamera);
-	mCoordinatesMesh->draw(mCamera, Mesh::LINES);
+
+	if (mButtonDrawMode->text() == "Draw: Mesh")
+	{
+		glEnable(GL_CULL_FACE);
+		mLSystemMesh->scale = { 0.1, 0.1, 0.1 };
+		mLSystemMesh->setUniform1i("uLightingEnabled", lighting);
+		mLSystemMesh->setUniform3f("uLight.direction", { mTrackPad->getTrackerPosition().x, -1, mTrackPad->getTrackerPosition().y });
+		mLSystemMesh->setUniform3f("uColor", { 1, 1, 1 });
+		mLSystemMesh->draw(mCamera);
+	}
+	else if (mButtonDrawMode->text() == "Draw: Wireframe")
+	{
+		mLSystemMesh->scale = { 0.1, 0.1, 0.1 };
+		mLSystemMesh->setUniform1i("uLightingEnabled", 0);
+		mLSystemMesh->setUniform3f("uLight.direction", { mTrackPad->getTrackerPosition().x, -1, mTrackPad->getTrackerPosition().y });
+		mLSystemMesh->setUniform3f("uColor", { 0, 0, 0 });
+		mLSystemMesh->draw(mCamera, Mesh::LINES);
+	}
+	else if (mButtonDrawMode->text() == "Draw: Mesh + Wireframe")
+	{
+		mLSystemMesh->scale = { 0.1, 0.1, 0.1 };
+		glEnable(GL_CULL_FACE);
+		mLSystemMesh->setUniform1i("uLightingEnabled", lighting);
+		mLSystemMesh->setUniform3f("uLight.direction", { mTrackPad->getTrackerPosition().x, -1, mTrackPad->getTrackerPosition().y });
+		mLSystemMesh->setUniform3f("uColor", { 1, 1, 1 });
+		mLSystemMesh->draw(mCamera);
+
+		mLSystemMesh->scale = { 0.101, 0.101, 0.101 };
+		mLSystemMesh->setUniform1i("uLightingEnabled", 0);
+		mLSystemMesh->setUniform3f("uColor", { 0, 0, 0 });
+		mLSystemMesh->draw(mCamera, Mesh::LINES);
+	}
+	else if (mButtonDrawMode->text() == "Draw: Lines")
+	{
+		glEnable(GL_CULL_FACE);
+		mLSystemMesh->scale = { 0.1, 0.1, 0.1 };
+		mLSystemMesh->setUniform1i("uLightingEnabled", 0);
+		mLSystemMesh->setUniform3f("uColor", { 1, 1, 1 });
+		mLSystemMesh->draw(mCamera, Mesh::LINES);
+	}
+	
+	if (mButtonCoordinateSystem->text() == "Hide coordinate system")
+		mCoordinatesMesh->draw(mCamera, Mesh::LINES);
+
+	if (trackPadHeld)
+		mTrackPad->setTrackerPosition({ mouse.x, mouse.y });
 
 	if (showmouse)
 	{
@@ -216,22 +292,40 @@ void MainWindow::draw()
 		mLabelInstructions->draw(mGUICamera);
 		mTextEditAxiom->draw(mGUICamera, drawCursor && mFocusedTextEdit == mTextEditAxiom);
 		mButtonGenerate->draw(mGUICamera);
+		mButtonAutoGenerate->draw(mGUICamera);
+		mButtonOpen->draw(mGUICamera);
+		mButtonCoordinateSystem->draw(mGUICamera);
 
-		int wWidth = 100;
-		int wHeight = 30;
+		mLabelGenerations->draw(mGUICamera);
+		mLabelLineThickness->draw(mGUICamera);
+		mLabelLineThicknessModifier->draw(mGUICamera);
+		mLabelLineLengthModifier->draw(mGUICamera);
+		mLabelPruneChance->draw(mGUICamera);
+		mLabelMutationChance->draw(mGUICamera);
+		mLabelMutationFactor->draw(mGUICamera);
 
-		int spacing = 50;
-		int margin = 20;
+		mTextEditGenerations->draw(mGUICamera, drawCursor && mFocusedTextEdit == mTextEditGenerations);
+		mTextEditLineThickness->draw(mGUICamera, drawCursor && mFocusedTextEdit == mTextEditLineThickness);
+		mTextEditLineThicknessModifier->draw(mGUICamera, drawCursor && mFocusedTextEdit == mTextEditLineThicknessModifier);
+		mTextEditLineLengthModifier->draw(mGUICamera, drawCursor && mFocusedTextEdit == mTextEditLineLengthModifier);
+		mTextEditPruneChance->draw(mGUICamera, drawCursor && mFocusedTextEdit == mTextEditPruneChance);
+		mTextEditMutationChance->draw(mGUICamera, drawCursor && mFocusedTextEdit == mTextEditMutationChance);
+		mTextEditMutationFactor->draw(mGUICamera, drawCursor && mFocusedTextEdit == mTextEditMutationFactor);
+
+		mTrackPad->draw(mGUICamera);
+		mButtonLightingEnabled->draw(mGUICamera);
+		mButtonDrawMode->draw(mGUICamera);
+		mLabelInfo->draw(mGUICamera);
 
 		if (mTextEditRules.size() == 0 || mTextEditRules[mTextEditRules.size() - 1]->text() != "")
 		{
-			TextEdit* textEdit = new TextEdit(6 * wWidth, wHeight, 2 * margin + wWidth, margin + spacing * (mTextEditRules.size() + 1), mFont);
+			TextEdit* textEdit = new TextEdit(3 * wWidth, wHeight, 2 * margin + wWidth - wWidth * 0.75, margin + spacing * (mTextEditRules.size() + 1), mFont);
 			mTextEditRules.push_back(textEdit);
 		}
 
 		if (mTextEditInstructions.size() == 0 || mTextEditInstructions[mTextEditInstructions.size() - 1]->text() != "")
 		{
-			TextEdit* textEdit = new TextEdit(wWidth, wHeight, 7 * wWidth + 3 * margin, margin + spacing * (mTextEditInstructions.size() + 1), mFont);
+			TextEdit* textEdit = new TextEdit(wWidth, wHeight, 4 * wWidth + 3 * margin - wWidth * 0.75, margin + spacing * (mTextEditInstructions.size() + 1), mFont);
 			mTextEditInstructions.push_back(textEdit);
 		}
 
@@ -313,6 +407,196 @@ void MainWindow::draw()
 	}
 }
 
+void MainWindow::generate()
+{
+	std::string axiom = mTextEditAxiom->text();
+	std::unordered_map<char, std::string> rules;
+	std::unordered_map<char, std::pair<LSystem::Instruction, float>> instructions;
+
+	for (int i=0;i<mTextEditRules.size()-1;++i)
+	{
+		std::string text = mTextEditRules[i]->text();
+		text.erase(std::remove(text.begin(), text.end(), ' '), text.end());
+		if (text.size() == 0 || !Utils::contains(text, ':'))
+			return;
+		std::vector<std::string> split = Utils::split(text, ":");
+		if (split.size() == 0)
+			return;
+		rules.insert(std::pair<char, std::string>(split[0][0], split[1]));
+	}
+
+	for (int i = 0; i < mTextEditInstructions.size() - 1; ++i)
+	{
+		std::string text = mTextEditInstructions[i]->text();
+		text.erase(std::remove(text.begin(), text.end(), ' '), text.end());
+		if (text.size() == 0 || !Utils::contains(text, ':'))
+			return;
+		std::vector<std::string> split = Utils::split(text, ":");
+		if (split.size() == 0)
+			return;
+		char c = split[0][0];
+
+		if (split[1].size() == 0)
+			return;
+
+		LSystem::Instruction instruction;
+		float value = 0;
+
+		if (Utils::contains(split[1], ','))
+		{
+			split = Utils::split(split[1], ",");
+
+			if (split.size() != 2)
+				return;
+
+			if (Utils::toUpper(split[0]) == "DRAW")
+				instruction = LSystem::DRAW;
+			else if (Utils::toUpper(split[0]) == "MOVE")
+				instruction = LSystem::MOVE;
+			else if (Utils::toUpper(split[0]) == "ROTATEZ" || Utils::toUpper(split[0]) == "ROLL")
+				instruction = LSystem::ROTATEZ;
+			else if (Utils::toUpper(split[0]) == "ROTATEY" || Utils::toUpper(split[0]) == "YAW")
+				instruction = LSystem::ROTATEY;
+			else if (Utils::toUpper(split[0]) == "ROTATEX" || Utils::toUpper(split[0]) == "PITCH")
+				instruction = LSystem::ROTATEX;
+			else if (Utils::toUpper(split[0]) == "PUSH")
+				instruction = LSystem::PUSH;
+			else if (Utils::toUpper(split[0]) == "POP")
+				instruction = LSystem::POP;
+
+			try
+			{
+				value = std::stof(split[1]);
+			}
+			catch (...) { }
+				
+		}
+
+		instructions.insert(std::pair<char, std::pair<LSystem::Instruction, float>>(c, std::pair<LSystem::Instruction, float>(instruction, value)));
+	}
+
+	int generations = 1;
+	float lineThickness = 1;
+	float lineThicknessModifier = 1;
+	float lineLengthModifier = 1;
+	float pruneChance = 0;
+	float mutationChance = 0;
+	float mutationFactor = 0;
+
+	try { generations = std::stof(mTextEditGenerations->text()); } catch (...) { }
+	try { lineThickness = std::stof(mTextEditLineThickness->text()); } catch (...) { }
+	try { lineThicknessModifier = std::stof(mTextEditLineThicknessModifier->text()); } catch (...) { }
+	try { lineLengthModifier = std::stof(mTextEditLineLengthModifier->text()); } catch (...) { }
+	try { pruneChance = std::stof(mTextEditPruneChance->text()); } catch (...) { }
+	try { mutationChance = std::stof(mTextEditMutationChance->text()); } catch (...) { }
+	try { mutationFactor = std::stof(mTextEditMutationFactor->text()); } catch (...) { }
+
+	LSystem lsystem(axiom, rules, instructions);
+	delete mLSystemMesh;
+	bool lines = mButtonDrawMode->text() == "Draw: Lines";
+
+	mLSystemMesh = lsystem.generate(generations, lineThickness, lineThicknessModifier, lineLengthModifier, pruneChance, mutationChance, mutationFactor, lines);
+}
+
+void MainWindow::generateFromFile(const std::string& filepath)
+{
+	if (filepath == "")
+		return; 
+
+	enum class Sector {
+		AXIOM,
+		RULES,
+		INSTRUCTIONS,
+		SETTINGS
+	};
+
+	std::ifstream input(filepath);
+
+	std::string axiom;
+	std::vector<std::string> rules;
+	std::vector<std::string> instructions;
+
+	std::string generations;
+	std::string lineThickness;
+	std::string lineThicknessModifier;
+	std::string lineLengthModifier;
+	std::string pruneChance;
+	std::string mutationChance;
+	std::string mutationFactor;
+
+	Sector sector = Sector::AXIOM;
+
+	for (std::string line; getline(input, line);)
+	{
+		if (line.size() == 0)
+			continue;
+
+		if (line[0] == '#')
+		{
+			     if (Utils::toLower(line) == "#axiom") sector = Sector::AXIOM;
+			else if (Utils::toLower(line) == "#rules") sector = Sector::RULES;
+			else if (Utils::toLower(line) == "#instructions") sector = Sector::INSTRUCTIONS;
+			else if (Utils::toLower(line) == "#settings") sector = Sector::SETTINGS;
+			continue;
+		}
+
+		switch (sector)
+		{
+		case Sector::AXIOM: axiom = line; break;
+		case Sector::RULES: rules.push_back(line); break;
+		case Sector::INSTRUCTIONS: instructions.push_back(line); break;
+		case Sector::SETTINGS:
+		{
+			std::vector<std::string> split = Utils::split(line, ":");
+
+			     if (Utils::toLower(split[0]) == "generations") generations = split[1];
+			else if (Utils::toLower(split[0]) == "linethickness") lineThickness = split[1];
+			else if (Utils::toLower(split[0]) == "linethicknessmodifier") lineThicknessModifier = split[1];
+			else if (Utils::toLower(split[0]) == "linelengthmodifier") lineLengthModifier = split[1];
+			else if (Utils::toLower(split[0]) == "prunechance") pruneChance = split[1];
+			else if (Utils::toLower(split[0]) == "mutationchance") mutationChance = split[1];
+			else if (Utils::toLower(split[0]) == "mutationfactor") mutationFactor = split[1];
+
+			break;
+		}
+		}
+	}
+
+	mTextEditAxiom->setText(axiom);
+	mTextEditGenerations->setText(generations);
+	mTextEditLineThickness->setText(lineThickness);
+	mTextEditLineThicknessModifier->setText(lineThicknessModifier);
+	mTextEditLineLengthModifier->setText(lineLengthModifier);
+	mTextEditPruneChance->setText(pruneChance);
+	mTextEditMutationChance->setText(mutationChance);
+	mTextEditMutationFactor->setText(mutationFactor);
+
+	for (TextEdit* rule : mTextEditRules)
+		delete rule;
+	mTextEditRules.clear();
+	for (TextEdit* instruction : mTextEditRules)
+		delete instruction;
+	mTextEditInstructions.clear();
+
+	for (int i = 0; i <= rules.size(); ++i)
+	{
+		TextEdit* textEdit = new TextEdit(3 * wWidth, wHeight, 2 * margin + wWidth - wWidth * 0.75, margin + spacing * (mTextEditRules.size() + 1), mFont);
+		mTextEditRules.push_back(textEdit);
+		if (i < rules.size())
+			textEdit->setText(rules[i]);
+	}
+
+	for (int i = 0; i <= instructions.size(); ++i)
+	{
+		TextEdit* textEdit = new TextEdit(wWidth, wHeight, 4 * wWidth + 3 * margin - wWidth * 0.75, margin + spacing * (mTextEditInstructions.size() + 1), mFont);
+		mTextEditInstructions.push_back(textEdit);
+		if (i < instructions.size())
+			textEdit->setText(instructions[i]);
+	}
+
+	generate();
+}
+
 void MainWindow::characterCallback(uint32 chr)
 {
 	if (showmouse)
@@ -320,6 +604,8 @@ void MainWindow::characterCallback(uint32 chr)
 		if (mFocusedTextEdit != nullptr)
 		{
 			mFocusedTextEdit->addChar((int8)chr);
+			if (mButtonAutoGenerate->text() == "Auto-generate: on")
+				generate();
 		}
 	}
 }
@@ -345,6 +631,16 @@ void MainWindow::keyboardCallback(int32 key, int32 scancode, int32 action, int32
 		else if (key == GLFW_KEY_E && action == GLFW_RELEASE) mRollRight = false;
 		else if (key == GLFW_KEY_SPACE && action == GLFW_RELEASE) mUp = false;
 		else if (key == GLFW_KEY_LEFT_CONTROL && action == GLFW_RELEASE) mDown = false;
+
+		else if (key == GLFW_KEY_R && action == GLFW_PRESS)
+		{
+			mCamera->position = { 0, 0.3, 1 };
+			mCamera->rotation = { 0, 180, 0 };
+		}
+		else if (key == GLFW_KEY_T && action == GLFW_PRESS)
+		{
+			generate();
+		}
 	}  
 	else
 	{
@@ -353,6 +649,9 @@ void MainWindow::keyboardCallback(int32 key, int32 scancode, int32 action, int32
 			if (key == GLFW_KEY_BACKSPACE && (action == GLFW_PRESS || action == GLFW_REPEAT))
 			{
 				mFocusedTextEdit->removeChar();
+
+				if (mButtonAutoGenerate->text() == "Auto-generate: on")
+					generate();
 			}
 			else if (key == GLFW_KEY_LEFT && (action == GLFW_PRESS || action == GLFW_REPEAT))
 			{
@@ -380,22 +679,87 @@ void MainWindow::keyboardCallback(int32 key, int32 scancode, int32 action, int32
 	if (key == GLFW_KEY_ENTER && action == GLFW_PRESS)
 	{
 		showmouse = !showmouse;
-		setCursorEnabled(showmouse);
-		setCursorPosition(width() / 2, height() / 2);
 		mouse.x = width() / 2;
 		mouse.y = width() / 2;
 		mouseLast = mouse;
+		setCursorEnabled(showmouse);
+		setCursorPosition(mouse.x, mouse.y);
 	}
 	else if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) close();
 }
 
 void MainWindow::mouseButtonsCallback(int32 button, int32 action, int32 mods)
 {
+	if (button == GLFW_MOUSE_BUTTON_1 && action == GLFW_RELEASE)
+		trackPadHeld = false;
+
 	if (button == GLFW_MOUSE_BUTTON_1 && action == GLFW_PRESS)
 	{
+		if (mTrackPad->contains(mouse.x, mouse.y))
+		{
+			trackPadHeld = true;
+			mTrackPad->setTrackerPosition({ mouse.x, mouse.y });
+			return;
+		}
+
+		if (mButtonDrawMode->contains(mouse.x, mouse.y))
+		{
+			if (mButtonDrawMode->text() == "Draw: Mesh")
+				mButtonDrawMode->setText("Draw: Wireframe");
+			else if (mButtonDrawMode->text() == "Draw: Wireframe")
+				mButtonDrawMode->setText("Draw: Mesh + Wireframe");
+			else if (mButtonDrawMode->text() == "Draw: Mesh + Wireframe")
+			{
+				mButtonDrawMode->setText("Draw: Lines");
+				generate();
+			}
+			else if (mButtonDrawMode->text() == "Draw: Lines")
+			{
+				mButtonDrawMode->setText("Draw: Mesh");
+				generate();
+			}
+			return;
+		}
+
+		if (mButtonLightingEnabled->contains(mouse.x, mouse.y))
+		{
+			if (mButtonLightingEnabled->text() == "Lighting: off")
+				mButtonLightingEnabled->setText("Lighting: on");
+			else
+				mButtonLightingEnabled->setText("Lighting: off");
+			return;
+		}
+
+		if (mButtonAutoGenerate->contains(mouse.x, mouse.y))
+		{
+			if (mButtonAutoGenerate->text() == "Auto-generate: off")
+			{
+				mButtonAutoGenerate->setText("Auto-generate: on");
+				generate();
+			}
+			else
+				mButtonAutoGenerate->setText("Auto-generate: off");
+			return;
+		}
+
 		if (mButtonGenerate->contains(mouse.x, mouse.y))
 		{
-			Log::info("%s", Utils::openFileDialog().c_str());
+			generate();
+			return;
+		}
+
+		if (mButtonOpen->contains(mouse.x, mouse.y))
+		{
+			generateFromFile(Utils::openFileDialog());
+			return;
+		}
+
+		if (mButtonCoordinateSystem->contains(mouse.x, mouse.y))
+		{
+			if (mButtonCoordinateSystem->text() == "Show coordinate system")
+				mButtonCoordinateSystem->setText("Hide coordinate system");
+			else
+				mButtonCoordinateSystem->setText("Show coordinate system");
 			return;
 		}
 
@@ -403,6 +767,55 @@ void MainWindow::mouseButtonsCallback(int32 button, int32 action, int32 mods)
 		{
 			mFocusedTextEdit = mTextEditAxiom;
 			mTextEditAxiom->setCursorPosition(mouse.x, mouse.y);
+			return;
+		}
+
+		if (mTextEditGenerations->contains(mouse.x, mouse.y))
+		{
+			mFocusedTextEdit = mTextEditGenerations;
+			mTextEditGenerations->setCursorPosition(mouse.x, mouse.y);
+			return;
+		}
+
+		if (mTextEditLineThickness->contains(mouse.x, mouse.y))
+		{
+			mFocusedTextEdit = mTextEditLineThickness;
+			mTextEditLineThickness->setCursorPosition(mouse.x, mouse.y);
+			return;
+		}
+
+		if (mTextEditLineThicknessModifier->contains(mouse.x, mouse.y))
+		{
+			mFocusedTextEdit = mTextEditLineThicknessModifier;
+			mTextEditLineThicknessModifier->setCursorPosition(mouse.x, mouse.y);
+			return;
+		}
+
+		if (mTextEditLineLengthModifier->contains(mouse.x, mouse.y))
+		{
+			mFocusedTextEdit = mTextEditLineLengthModifier;
+			mTextEditLineLengthModifier->setCursorPosition(mouse.x, mouse.y);
+			return;
+		}
+
+		if (mTextEditPruneChance->contains(mouse.x, mouse.y))
+		{
+			mFocusedTextEdit = mTextEditPruneChance;
+			mTextEditPruneChance->setCursorPosition(mouse.x, mouse.y);
+			return;
+		}
+
+		if (mTextEditMutationChance->contains(mouse.x, mouse.y))
+		{
+			mFocusedTextEdit = mTextEditMutationChance;
+			mTextEditMutationChance->setCursorPosition(mouse.x, mouse.y);
+			return;
+		}
+
+		if (mTextEditMutationFactor->contains(mouse.x, mouse.y))
+		{
+			mFocusedTextEdit = mTextEditMutationFactor;
+			mTextEditMutationFactor->setCursorPosition(mouse.x, mouse.y);
 			return;
 		}
 
@@ -435,6 +848,50 @@ void MainWindow::mousePositionCallback(double xpos, double ypos)
 	mouse.x = xpos;
 	mouse.y = ypos;
 
+	if (mTrackPad->contains(xpos, ypos))
+	{
+		mTrackPad->setColor({ 0.8, 0.8, 0.8 });
+		setCursor(Window::HAND);
+		return;
+	}
+	else
+	{
+		mTrackPad->setColor({ 1, 1, 1 });
+	}
+
+	if (mButtonDrawMode->contains(xpos, ypos))
+	{
+		mButtonDrawMode->setColor({ 0.8, 0.8, 0.8 });
+		setCursor(Window::HAND);
+		return;
+	}
+	else
+	{
+		mButtonDrawMode->setColor({ 1, 1, 1 });
+	}
+
+	if (mButtonLightingEnabled->contains(xpos, ypos))
+	{
+		mButtonLightingEnabled->setColor({ 0.8, 0.8, 0.8 });
+		setCursor(Window::HAND);
+		return;
+	}
+	else
+	{
+		mButtonLightingEnabled->setColor({ 1, 1, 1 });
+	}
+
+	if (mButtonAutoGenerate->contains(xpos, ypos))
+	{
+		mButtonAutoGenerate->setColor({ 0.8, 0.8, 0.8 });
+		setCursor(Window::HAND);
+		return;
+	}
+	else
+	{
+		mButtonAutoGenerate->setColor({ 1, 1, 1 });
+	}
+
 	if (mButtonGenerate->contains(xpos, ypos))
 	{
 		mButtonGenerate->setColor({ 0.8, 0.8, 0.8 });
@@ -443,10 +900,67 @@ void MainWindow::mousePositionCallback(double xpos, double ypos)
 	}
 	else
 	{
-		mButtonGenerate->setColor({ 0.9, 0.9, 0.9 });
+		mButtonGenerate->setColor({ 1, 1, 1 });
+	}
+
+	if (mButtonOpen->contains(xpos, ypos))
+	{
+		mButtonOpen->setColor({ 0.8, 0.8, 0.8 });
+		setCursor(Window::HAND);
+		return;
+	}
+	else
+	{
+		mButtonOpen->setColor({ 1, 1, 1 });
+	}
+
+	if (mButtonCoordinateSystem->contains(xpos, ypos))
+	{
+		mButtonCoordinateSystem->setColor({ 0.8, 0.8, 0.8 });
+		setCursor(Window::HAND);
+		return;
+	}
+	else
+	{
+		mButtonCoordinateSystem->setColor({ 1, 1, 1 });
 	}
 
 	if (mTextEditAxiom->contains(xpos, ypos))
+	{
+		setCursor(Window::IBEAM);
+		return;
+	}
+	else if (mTextEditGenerations->contains(xpos, ypos))
+	{
+		setCursor(Window::IBEAM);
+		return;
+	}
+	else if (mTextEditLineThickness->contains(xpos, ypos))
+	{
+		setCursor(Window::IBEAM);
+		return;
+	}
+	else if (mTextEditLineThicknessModifier->contains(xpos, ypos))
+	{
+		setCursor(Window::IBEAM);
+		return;
+	}
+	else if (mTextEditLineLengthModifier->contains(xpos, ypos))
+	{
+		setCursor(Window::IBEAM);
+		return;
+	}
+	else if (mTextEditPruneChance->contains(xpos, ypos))
+	{
+		setCursor(Window::IBEAM);
+		return;
+	}
+	else if (mTextEditMutationChance->contains(xpos, ypos))
+	{
+		setCursor(Window::IBEAM);
+		return;
+	}
+	else if (mTextEditMutationFactor->contains(xpos, ypos))
 	{
 		setCursor(Window::IBEAM);
 		return;

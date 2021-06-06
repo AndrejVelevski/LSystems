@@ -4,7 +4,8 @@ Button::Button(float width, float height, float x, float y, const std::string& t
 {
 	mWidth = width;
 	mHeight = height;
-	mText = text;
+	mFont = font;
+
 	std::vector<float>* vertices = new std::vector<float> {
 		0, 0,
 		mWidth, 0,
@@ -17,21 +18,30 @@ Button::Button(float width, float height, float x, float y, const std::string& t
 		1, 2, 3
 	};
 
-	mLabel = new Label(width, height, x, y, text, font);
-
 	mMesh = new Mesh(new Shader("res/shaders/guiButton.vert", "res/shaders/guiButton.frag"), vertices, elements);
 	mMesh->setAttribute2f("aPosition", 2, 0);
-
-	setColor({ 1, 1, 1 });
-
 	mMesh->position.x = x;
 	mMesh->position.y = y;
+
+	setText(text);
+	setColor({ 1, 1, 1 });
 }
 
 Button::~Button()
 {
 	delete mMesh;
 	delete mLabel;
+}
+
+std::string Button::text()
+{
+	return mLabel->text();
+}
+
+void Button::setText(const std::string& text)
+{
+	delete mLabel;
+	mLabel = new Label(mWidth, mHeight, mMesh->position.x, mMesh->position.y, text, mFont);
 }
 
 void Button::setColor(glm::vec3 color)

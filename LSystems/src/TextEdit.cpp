@@ -27,7 +27,7 @@ TextEdit::TextEdit(float width, float height, float x, float y, Font* font)
 	{
 		std::vector<float>* vertices = new std::vector<float>{
 			0, 0,
-			0, (float)(font->size('p').y + font->bearing('p').y)
+			0, (float)(font->fontSize() + font->size('p').y - font->bearing('p').y)
 		};
 
 		std::vector<uint32>* elements = new std::vector<uint32>{

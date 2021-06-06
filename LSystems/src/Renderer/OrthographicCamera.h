@@ -3,7 +3,7 @@
 #include "ICamera.h"
 #include "Transform.h"
 
-class OrthographicCamera : public Transform, public ICamera
+class OrthographicCamera : public ICamera
 {
 
 public:

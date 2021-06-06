@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Utils/Types.h"
+#include "Renderer/Mesh.h"
 
 #include <string>
 #include <vector>
@@ -17,7 +18,6 @@ public:
 		ROTATEX, PITCH,
 		PUSH,
 		POP,
-		SCALE
 	};
 
 public:
@@ -26,7 +26,7 @@ public:
 		    const std::unordered_map<char, std::string>& rules,
 		    const std::unordered_map<char, std::pair<Instruction, float>>& instructions);
 
-	void generate(int generation, std::vector<float>* vertices, std::vector<uint32>* elements);
+	Mesh* generate(int generation, float lineThickness, float lineThicknessModifier, float lineLengthModifier, float pruneChance, float mutationChance, float mutationFactor, bool lines);
 
 private:
 	void mfGenerate(int generation);

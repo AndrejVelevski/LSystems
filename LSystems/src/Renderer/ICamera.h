@@ -1,8 +1,10 @@
 #pragma once
 
+#include "Transform.h"
+
 #include <glm/gtc/type_ptr.hpp>
 
-class ICamera
+class ICamera : public Transform
 {
 public:
 	virtual glm::mat4 getView() = 0;

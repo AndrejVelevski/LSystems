@@ -45,16 +45,25 @@ void Mesh::updateData(uint32 index, uint32 count)
 
 void Mesh::draw(ICamera* camera, Mode mode)
 {
+	if (mVertices == nullptr || mVertices->size() == 0)
+		return;
+
 	glBindVertexArray(mVAO);
 	mShader->bind();
 	setUniformMatrix4fv("uModel", getModel());
 	setUniformMatrix4fv("uView", camera->getView());
 	setUniformMatrix4fv("uProjection", camera->getProjection());
 
+	setUniform3f("uLight.ambient", { 0.4f, 0.4f, 0.4f });
+	setUniform3f("uLight.diffuse", { 0.5f, 0.5f, 0.5f });
+	setUniform3f("uLight.specular", { 0.1f, 0.1f, 0.1f });
+
+	setUniform3f("uCameraPosition", camera->position);
+
 	if (mElements != nullptr)
 		glDrawElements(mode, mElements->size(), GL_UNSIGNED_INT, nullptr);
 	else
-		glDrawArrays(mode, 0, mVertices->size()/2);
+		glDrawArrays(mode, 0, mVertices->size() / 2);
 }
 
 void Mesh::setUniform1i(const std::string& uniform, int32 i)
@@ -139,6 +148,7 @@ void Mesh::setUniform4f(const std::string& uniform, const glm::vec4& vec)
 
 void Mesh::setUniformMatrix4fv(const std::string& uniform, const glm::mat4& mat)
 {
+	mShader->bind();
 	auto iterator = mUniforms.find(uniform);
 	if (iterator != mUniforms.end())
 	{
@@ -155,8 +165,6 @@ void Mesh::setUniformMatrix4fv(const std::string& uniform, const glm::mat4& mat)
 void Mesh::setAttribute2f(const std::string& attribute, uint32 vertexSize, uint32 attributeOffset)
 {
 	glBindVertexArray(mVAO);
-	glBindBuffer(GL_ARRAY_BUFFER, mVBO);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO);
 	auto iterator = mAttributes.find(attribute);
 	if (iterator != mAttributes.end())
 	{
@@ -170,14 +178,11 @@ void Mesh::setAttribute2f(const std::string& attribute, uint32 vertexSize, uint3
 		glVertexAttribPointer(location, 2, GL_FLOAT, GL_FALSE, vertexSize * sizeof(float), (void*)(attributeOffset * sizeof(float)));
 		glEnableVertexAttribArray(location);
 	}
-	glBindVertexArray(0);
 }
 
 void Mesh::setAttribute3f(const std::string& attribute, uint32 vertexSize, uint32 attributeOffset)
 {
 	glBindVertexArray(mVAO);
-	glBindBuffer(GL_ARRAY_BUFFER, mVBO);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mEBO);
 	auto iterator = mAttributes.find(attribute);
 	if (iterator != mAttributes.end())
 	{
@@ -208,14 +213,14 @@ void Mesh::generateCylinder(float bottomRadius, float topRadius, float height, s
 		if (i != precision - 1)
 		{
 			elements.push_back(i + 2);
-			elements.push_back(i + 1);
 			elements.push_back(0);
+			elements.push_back(i + 1);
 		}
 		else
 		{
 			elements.push_back(1);
-			elements.push_back(i + 1);
 			elements.push_back(0);
+			elements.push_back(i + 1);
 		}
 	}
 
@@ -232,14 +237,14 @@ void Mesh::generateCylinder(float bottomRadius, float topRadius, float height, s
 		if (i != precision - 1)
 		{
 			elements.push_back(precision + 1);
-			elements.push_back(precision + i + 2);
 			elements.push_back(precision + i + 3);
+			elements.push_back(precision + i + 2);
 		}
 		else
 		{
 			elements.push_back(precision + 1);
-			elements.push_back(precision + i + 2);
 			elements.push_back(precision + 2);
+			elements.push_back(precision + i + 2);
 		}
 	}
 
@@ -248,20 +253,20 @@ void Mesh::generateCylinder(float bottomRadius, float topRadius, float height, s
 		if (i != precision - 1)
 		{
 			elements.push_back(i + 1);
-			elements.push_back(i + 2);
 			elements.push_back(i + precision + 2);
 			elements.push_back(i + 2);
+			elements.push_back(i + 2);
+			elements.push_back(i + precision + 2);
 			elements.push_back(i + precision + 3);
-			elements.push_back(i + precision + 2);
 		}
 		else
 		{
 			elements.push_back(i + 1);
-			elements.push_back(1);
 			elements.push_back(i + precision + 2);
 			elements.push_back(1);
+			elements.push_back(1);
+			elements.push_back(i + precision + 2);
 			elements.push_back(precision + 2);
-			elements.push_back(i + precision + 2);
 		}
 	}
 }

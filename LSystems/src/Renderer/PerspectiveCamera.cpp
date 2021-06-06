@@ -1,4 +1,5 @@
 #include "PerspectiveCamera.h"
+#include "../Utils/Log.h"
 
 PerspectiveCamera::PerspectiveCamera(float fov, float aspect)
 {
@@ -16,7 +17,6 @@ glm::mat4 PerspectiveCamera::getView()
 
 glm::mat4 PerspectiveCamera::getProjection()
 {
-	
 	return glm::perspective(glm::radians(fov), aspect, near, far);
 }
 

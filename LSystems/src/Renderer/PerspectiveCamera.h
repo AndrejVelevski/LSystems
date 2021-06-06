@@ -3,7 +3,7 @@
 #include "ICamera.h"
 #include "Transform.h"
 
-class PerspectiveCamera : public Transform, public ICamera
+class PerspectiveCamera : public ICamera
 {
 
 public:
