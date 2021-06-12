@@ -1,0 +1,273 @@
+﻿  Label.cpp
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\Renderer\Mesh.h(29): warning C4091: 'static ': ignored on left of 'Mesh::Mode' when no variable is declared
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\Label.cpp(38,11): warning C4244: 'initializing': conversion from 'T' to 'float', possible loss of data
+          with
+          [
+              T=int
+          ]
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\Label.cpp(39,11): warning C4244: 'initializing': conversion from 'T' to 'float', possible loss of data
+          with
+          [
+              T=int
+          ]
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\Label.cpp(158,40): warning C4552: '-': result of expression not used
+  Button.cpp
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\Renderer\Mesh.h(29): warning C4091: 'static ': ignored on left of 'Mesh::Mode' when no variable is declared
+  LSystem.cpp
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\Renderer\Mesh.h(29): warning C4091: 'static ': ignored on left of 'Mesh::Mode' when no variable is declared
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\LSystem.cpp(20,13): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\LSystem.cpp(44,34): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\LSystem.cpp(73,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  MainWindow.cpp
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\Renderer\Mesh.h(29): warning C4091: 'static ': ignored on left of 'Mesh::Mode' when no variable is declared
+D:\Windows Kits\10\Include\10.0.17763.0\shared\minwindef.h(130,1): warning C4005: 'APIENTRY': macro redefinition
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\Dependencies\glad\include\glad\glad.h(32): message : see previous definition of 'APIENTRY'
+  The contents of <filesystem> are available only with C++17 or later.
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(55,60): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(55,45): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(55,36): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(55,32): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(56,97): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(56,73): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(56,44): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(56,34): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(57,94): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(57,70): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(57,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(57,33): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(58,100): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(58,76): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(58,43): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(58,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(59,96): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(59,72): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(59,39): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(59,31): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(64,60): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(64,45): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(64,36): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(64,32): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(66,92): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(66,68): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(66,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(66,27): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(67,104): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(67,80): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(67,47): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(67,39): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(71,97): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(71,73): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(71,40): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(71,32): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(72,103): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(72,79): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(72,46): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(72,38): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(77,99): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(77,75): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(77,42): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(77,34): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(78,105): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(78,81): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(78,48): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(78,40): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(83,107): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(83,83): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(83,50): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(83,42): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(84,113): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(84,89): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(84,56): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(84,48): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(89,104): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(89,80): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(89,47): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(89,39): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(90,110): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(90,86): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(90,53): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(90,45): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(95,97): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(95,73): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(95,40): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(95,32): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(96,103): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(96,79): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(96,46): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(96,38): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(101,100): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(101,76): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(101,43): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(101,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(102,106): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(102,82): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(102,49): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(102,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(107,100): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(107,76): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(107,43): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(107,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(108,106): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(108,82): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(108,49): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(108,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(113,91): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(113,67): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(113,35): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(113,27): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(115,103): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(115,79): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(115,46): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(115,38): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(119,96): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(119,72): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(119,39): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(119,31): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(136,99): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(136,75): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(136,42): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(136,33): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(139,113): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(139,89): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(139,56): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(139,48): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(162,3): warning C4305: 'initializing': truncation from 'double' to '_Ty'
+          with
+          [
+              _Ty=float
+          ]
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(171,33): warning C4305: '=': truncation from 'double' to 'T'
+          with
+          [
+              T=float
+          ]
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(324,103): warning C4244: 'argument': conversion from 'unsigned __int64' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(324,79): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(324,50): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(324,40): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(330,103): warning C4244: 'argument': conversion from 'unsigned __int64' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(330,79): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(330,46): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(330,38): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(347,4): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(379,4): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(488,31): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(585,102): warning C4244: 'argument': conversion from 'unsigned __int64' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(585,78): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(585,49): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(585,39): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(593,102): warning C4244: 'argument': conversion from 'unsigned __int64' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(593,78): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(593,45): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(593,37): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(672,72): warning C4267: 'argument': conversion from 'size_t' to 'int32', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(684,21): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(685,21): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(850,12): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(851,12): warning C4244: '=': conversion from 'double' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(853,32): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(853,26): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(864,38): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(864,32): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(875,45): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(875,39): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(886,42): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(886,36): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(897,38): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(897,32): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(908,34): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(908,28): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(919,46): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(919,40): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(930,37): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(930,31): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(935,48): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(935,42): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(940,50): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(940,44): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(945,58): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(945,52): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(950,55): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(950,49): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(955,48): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(955,42): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(960,51): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(960,45): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(965,51): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(965,45): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(973,28): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(973,22): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(982,28): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\MainWindow.cpp(982,22): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  OrthographicCamera.cpp
+  PerspectiveCamera.cpp
+  Mesh.cpp
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\Renderer\Mesh.h(29): warning C4091: 'static ': ignored on left of 'Mesh::Mode' when no variable is declared
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\Renderer\Mesh.cpp(64,67): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\Renderer\Mesh.cpp(66,46): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\Renderer\Mesh.cpp(204,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\Renderer\Mesh.cpp(206,15): warning C4244: 'initializing': conversion from 'genType' to 'float', possible loss of data
+          with
+          [
+              genType=double
+          ]
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\Renderer\Mesh.cpp(228,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\Renderer\Mesh.cpp(230,15): warning C4244: 'initializing': conversion from 'genType' to 'float', possible loss of data
+          with
+          [
+              genType=double
+          ]
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\Renderer\Mesh.cpp(251,20): warning C4018: '<': signed/unsigned mismatch
+  main.cpp
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\Renderer\Mesh.h(29): warning C4091: 'static ': ignored on left of 'Mesh::Mode' when no variable is declared
+  TextEdit.cpp
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\Renderer\Mesh.h(29): warning C4091: 'static ': ignored on left of 'Mesh::Mode' when no variable is declared
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\TextEdit.cpp(41,31): warning C4244: '=': conversion from 'uint32' to 'float', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\TextEdit.cpp(92,34): warning C4267: '=': conversion from 'size_t' to 'int32', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\TextEdit.cpp(112,31): warning C4267: 'argument': conversion from 'size_t' to 'int32', possible loss of data
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\TextEdit.cpp(139,60): warning C4267: '+=': conversion from 'size_t' to 'int32', possible loss of data
+  TrackPad.cpp
+C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\LSystems\src\Renderer\Mesh.h(29): warning C4091: 'static ': ignored on left of 'Mesh::Mode' when no variable is declared
+  Generating Code...
+LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+LINK : warning LNK4098: defaultlib 'LIBCMT' conflicts with use of other libs; use /NODEFAULTLIB:library
+freetype.lib(autofit.obj) : warning LNK4099: PDB 'freetype.pdb' was not found with 'freetype.lib(autofit.obj)' or at 'C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\x64\Debug\freetype.pdb'; linking object as if no debug info
+freetype.lib(ftbase.obj) : warning LNK4099: PDB 'freetype.pdb' was not found with 'freetype.lib(ftbase.obj)' or at 'C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\x64\Debug\freetype.pdb'; linking object as if no debug info
+freetype.lib(ftbitmap.obj) : warning LNK4099: PDB 'freetype.pdb' was not found with 'freetype.lib(ftbitmap.obj)' or at 'C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\x64\Debug\freetype.pdb'; linking object as if no debug info
+freetype.lib(ftinit.obj) : warning LNK4099: PDB 'freetype.pdb' was not found with 'freetype.lib(ftinit.obj)' or at 'C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\x64\Debug\freetype.pdb'; linking object as if no debug info
+freetype.lib(ftsystem.obj) : warning LNK4099: PDB 'freetype.pdb' was not found with 'freetype.lib(ftsystem.obj)' or at 'C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\x64\Debug\freetype.pdb'; linking object as if no debug info
+freetype.lib(bdf.obj) : warning LNK4099: PDB 'freetype.pdb' was not found with 'freetype.lib(bdf.obj)' or at 'C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\x64\Debug\freetype.pdb'; linking object as if no debug info
+freetype.lib(cff.obj) : warning LNK4099: PDB 'freetype.pdb' was not found with 'freetype.lib(cff.obj)' or at 'C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\x64\Debug\freetype.pdb'; linking object as if no debug info
+freetype.lib(type1cid.obj) : warning LNK4099: PDB 'freetype.pdb' was not found with 'freetype.lib(type1cid.obj)' or at 'C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\x64\Debug\freetype.pdb'; linking object as if no debug info
+freetype.lib(ftgzip.obj) : warning LNK4099: PDB '' was not found with 'freetype.lib(ftgzip.obj)' or at ''; linking object as if no debug info
+freetype.lib(ftlzw.obj) : warning LNK4099: PDB 'freetype.pdb' was not found with 'freetype.lib(ftlzw.obj)' or at 'C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\x64\Debug\freetype.pdb'; linking object as if no debug info
+freetype.lib(pcf.obj) : warning LNK4099: PDB 'freetype.pdb' was not found with 'freetype.lib(pcf.obj)' or at 'C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\x64\Debug\freetype.pdb'; linking object as if no debug info
+freetype.lib(pfr.obj) : warning LNK4099: PDB 'freetype.pdb' was not found with 'freetype.lib(pfr.obj)' or at 'C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\x64\Debug\freetype.pdb'; linking object as if no debug info
+freetype.lib(psaux.obj) : warning LNK4099: PDB 'freetype.pdb' was not found with 'freetype.lib(psaux.obj)' or at 'C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\x64\Debug\freetype.pdb'; linking object as if no debug info
+freetype.lib(pshinter.obj) : warning LNK4099: PDB 'freetype.pdb' was not found with 'freetype.lib(pshinter.obj)' or at 'C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\x64\Debug\freetype.pdb'; linking object as if no debug info
+freetype.lib(psmodule.obj) : warning LNK4099: PDB 'freetype.pdb' was not found with 'freetype.lib(psmodule.obj)' or at 'C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\x64\Debug\freetype.pdb'; linking object as if no debug info
+freetype.lib(raster.obj) : warning LNK4099: PDB 'freetype.pdb' was not found with 'freetype.lib(raster.obj)' or at 'C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\x64\Debug\freetype.pdb'; linking object as if no debug info
+freetype.lib(sfnt.obj) : warning LNK4099: PDB 'freetype.pdb' was not found with 'freetype.lib(sfnt.obj)' or at 'C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\x64\Debug\freetype.pdb'; linking object as if no debug info
+freetype.lib(smooth.obj) : warning LNK4099: PDB 'freetype.pdb' was not found with 'freetype.lib(smooth.obj)' or at 'C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\x64\Debug\freetype.pdb'; linking object as if no debug info
+freetype.lib(truetype.obj) : warning LNK4099: PDB 'freetype.pdb' was not found with 'freetype.lib(truetype.obj)' or at 'C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\x64\Debug\freetype.pdb'; linking object as if no debug info
+freetype.lib(type1.obj) : warning LNK4099: PDB 'freetype.pdb' was not found with 'freetype.lib(type1.obj)' or at 'C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\x64\Debug\freetype.pdb'; linking object as if no debug info
+freetype.lib(type42.obj) : warning LNK4099: PDB 'freetype.pdb' was not found with 'freetype.lib(type42.obj)' or at 'C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\x64\Debug\freetype.pdb'; linking object as if no debug info
+freetype.lib(winfnt.obj) : warning LNK4099: PDB 'freetype.pdb' was not found with 'freetype.lib(winfnt.obj)' or at 'C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\x64\Debug\freetype.pdb'; linking object as if no debug info
+freetype.lib(ftdebug.obj) : warning LNK4099: PDB 'freetype.pdb' was not found with 'freetype.lib(ftdebug.obj)' or at 'C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\x64\Debug\freetype.pdb'; linking object as if no debug info
+  LSystems.vcxproj -> C:\Users\Andrej\Documents\Visual Studio Projects\LSystems\x64\Debug\LSystems.exe
