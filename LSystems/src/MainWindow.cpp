@@ -186,6 +186,8 @@ void MainWindow::setup()
 
 	mCoordinatesMesh->setAttribute3f("aPosition", 6, 0);
 	mCoordinatesMesh->setAttribute3f("aColor", 6, 3);
+	mCoordinatesMesh->setUniform1i("uLightingEnabled", 0);
+	mCoordinatesMesh->setUniform3f("uColor", { 1, 1, 1 });
 
 	//GL settings
 	glEnable(GL_DEPTH_TEST);
