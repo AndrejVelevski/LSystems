@@ -97,7 +97,7 @@ void TextEdit::setCursorPosition(float mousex, float mousey)
 	mousex -= mMesh->position.x;
 	mousey -= mMesh->position.y;
 
-	std::string text = mLabel->text();
+	std::string text = mLabel->getText();
 	for (uint32 i = 0; i < text.size(); ++i)
 	{
 		glm::vec2 cp1 = mLabel->characterPosition(i);
@@ -114,7 +114,7 @@ void TextEdit::setCursorPosition(float mousex, float mousey)
 
 void TextEdit::addChar(int8 chr)
 {
-	std::string text = mLabel->text();
+	std::string text = mLabel->getText();
 	text.insert(text.begin()+mCursorPosition, chr);
 	setText(text);
 }
@@ -123,20 +123,20 @@ void TextEdit::removeChar()
 {
 	if (mCursorPosition == 0)
 		return;
-	std::string text = mLabel->text();
+	std::string text = mLabel->getText();
 	text.replace(text.begin() + mCursorPosition-1, text.begin() + mCursorPosition, "");
 	setText(text);
 }
 
 std::string TextEdit::text()
 {
-	return mLabel->text();
+	return mLabel->getText();
 }
 
 void TextEdit::setText(const std::string& text)
 {
 	if (mLabel != nullptr)
-		mCursorPosition += text.size() - mLabel->text().size();
+		mCursorPosition += text.size() - mLabel->getText().size();
 	else
 		mCursorPosition = 0;
 

@@ -229,14 +229,14 @@ void MainWindow::draw()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	bool lighting = mButtonLightingEnabled->text() == "Lighting: on";
+	bool lighting = mButtonLightingEnabled->getText() == "Lighting: on";
 
 	glDisable(GL_CULL_FACE);
 	mFloorMesh->setUniform1i("uLightingEnabled", lighting);
 	mFloorMesh->setUniform3f("uLight.direction", { mTrackPad->getTrackerPosition().x, -1, mTrackPad->getTrackerPosition().y});
 	mFloorMesh->draw(mCamera);
 
-	if (mButtonDrawMode->text() == "Draw: Mesh")
+	if (mButtonDrawMode->getText() == "Draw: Mesh")
 	{
 		glEnable(GL_CULL_FACE);
 		mLSystemMesh->scale = { 0.1, 0.1, 0.1 };
@@ -245,7 +245,7 @@ void MainWindow::draw()
 		mLSystemMesh->setUniform3f("uColor", { 1, 1, 1 });
 		mLSystemMesh->draw(mCamera);
 	}
-	else if (mButtonDrawMode->text() == "Draw: Wireframe")
+	else if (mButtonDrawMode->getText() == "Draw: Wireframe")
 	{
 		mLSystemMesh->scale = { 0.1, 0.1, 0.1 };
 		mLSystemMesh->setUniform1i("uLightingEnabled", 0);
@@ -253,7 +253,7 @@ void MainWindow::draw()
 		mLSystemMesh->setUniform3f("uColor", { 0, 0, 0 });
 		mLSystemMesh->draw(mCamera, Mesh::LINES);
 	}
-	else if (mButtonDrawMode->text() == "Draw: Mesh + Wireframe")
+	else if (mButtonDrawMode->getText() == "Draw: Mesh + Wireframe")
 	{
 		mLSystemMesh->scale = { 0.1, 0.1, 0.1 };
 		glEnable(GL_CULL_FACE);
@@ -267,7 +267,7 @@ void MainWindow::draw()
 		mLSystemMesh->setUniform3f("uColor", { 0, 0, 0 });
 		mLSystemMesh->draw(mCamera, Mesh::LINES);
 	}
-	else if (mButtonDrawMode->text() == "Draw: Lines")
+	else if (mButtonDrawMode->getText() == "Draw: Lines")
 	{
 		glEnable(GL_CULL_FACE);
 		mLSystemMesh->scale = { 0.1, 0.1, 0.1 };
@@ -276,7 +276,7 @@ void MainWindow::draw()
 		mLSystemMesh->draw(mCamera, Mesh::LINES);
 	}
 	
-	if (mButtonCoordinateSystem->text() == "Hide coordinate system")
+	if (mButtonCoordinateSystem->getText() == "Hide coordinate system")
 		mCoordinatesMesh->draw(mCamera, Mesh::LINES);
 
 	if (trackPadHeld)
@@ -493,7 +493,7 @@ void MainWindow::generate()
 
 	LSystem lsystem(axiom, rules, instructions);
 	delete mLSystemMesh;
-	bool lines = mButtonDrawMode->text() == "Draw: Lines";
+	bool lines = mButtonDrawMode->getText() == "Draw: Lines";
 
 	mLSystemMesh = lsystem.generate(generations, lineThickness, lineThicknessModifier, lineLengthModifier, pruneChance, mutationChance, mutationFactor, lines);
 }
@@ -604,7 +604,7 @@ void MainWindow::characterCallback(uint32 chr)
 		if (mFocusedTextEdit != nullptr)
 		{
 			mFocusedTextEdit->addChar((int8)chr);
-			if (mButtonAutoGenerate->text() == "Auto-generate: on")
+			if (mButtonAutoGenerate->getText() == "Auto-generate: on")
 				generate();
 		}
 	}
@@ -650,7 +650,7 @@ void MainWindow::keyboardCallback(int32 key, int32 scancode, int32 action, int32
 			{
 				mFocusedTextEdit->removeChar();
 
-				if (mButtonAutoGenerate->text() == "Auto-generate: on")
+				if (mButtonAutoGenerate->getText() == "Auto-generate: on")
 					generate();
 			}
 			else if (key == GLFW_KEY_LEFT && (action == GLFW_PRESS || action == GLFW_REPEAT))
@@ -704,16 +704,16 @@ void MainWindow::mouseButtonsCallback(int32 button, int32 action, int32 mods)
 
 		if (mButtonDrawMode->contains(mouse.x, mouse.y))
 		{
-			if (mButtonDrawMode->text() == "Draw: Mesh")
+			if (mButtonDrawMode->getText() == "Draw: Mesh")
 				mButtonDrawMode->setText("Draw: Wireframe");
-			else if (mButtonDrawMode->text() == "Draw: Wireframe")
+			else if (mButtonDrawMode->getText() == "Draw: Wireframe")
 				mButtonDrawMode->setText("Draw: Mesh + Wireframe");
-			else if (mButtonDrawMode->text() == "Draw: Mesh + Wireframe")
+			else if (mButtonDrawMode->getText() == "Draw: Mesh + Wireframe")
 			{
 				mButtonDrawMode->setText("Draw: Lines");
 				generate();
 			}
-			else if (mButtonDrawMode->text() == "Draw: Lines")
+			else if (mButtonDrawMode->getText() == "Draw: Lines")
 			{
 				mButtonDrawMode->setText("Draw: Mesh");
 				generate();
@@ -723,7 +723,7 @@ void MainWindow::mouseButtonsCallback(int32 button, int32 action, int32 mods)
 
 		if (mButtonLightingEnabled->contains(mouse.x, mouse.y))
 		{
-			if (mButtonLightingEnabled->text() == "Lighting: off")
+			if (mButtonLightingEnabled->getText() == "Lighting: off")
 				mButtonLightingEnabled->setText("Lighting: on");
 			else
 				mButtonLightingEnabled->setText("Lighting: off");
@@ -732,7 +732,7 @@ void MainWindow::mouseButtonsCallback(int32 button, int32 action, int32 mods)
 
 		if (mButtonAutoGenerate->contains(mouse.x, mouse.y))
 		{
-			if (mButtonAutoGenerate->text() == "Auto-generate: off")
+			if (mButtonAutoGenerate->getText() == "Auto-generate: off")
 			{
 				mButtonAutoGenerate->setText("Auto-generate: on");
 				generate();
@@ -756,7 +756,7 @@ void MainWindow::mouseButtonsCallback(int32 button, int32 action, int32 mods)
 
 		if (mButtonCoordinateSystem->contains(mouse.x, mouse.y))
 		{
-			if (mButtonCoordinateSystem->text() == "Show coordinate system")
+			if (mButtonCoordinateSystem->getText() == "Show coordinate system")
 				mButtonCoordinateSystem->setText("Hide coordinate system");
 			else
 				mButtonCoordinateSystem->setText("Show coordinate system");

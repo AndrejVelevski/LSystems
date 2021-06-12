@@ -15,7 +15,7 @@ public:
 	Button(float width, float height, float x, float y, const std::string& text, Font* font);
 	~Button();
 
-	std::string text();
+	std::string getText();
 	void setText(const std::string& text);
 	void setColor(glm::vec3 color);
 	bool contains(float x, float y);

@@ -33,9 +33,9 @@ Button::~Button()
 	delete mLabel;
 }
 
-std::string Button::text()
+std::string Button::getText()
 {
-	return mLabel->text();
+	return mLabel->getText();
 }
 
 void Button::setText(const std::string& text)

@@ -95,7 +95,7 @@ void Label::setColor(glm::vec3 color)
 	mMesh->setUniform3f("uColor", color);
 }
 
-std::string Label::text()
+std::string Label::getText()
 {
 	return mText;
 }

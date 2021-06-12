@@ -21,7 +21,7 @@ public:
 	Label(float width, float height, float x, float y, const std::string& text, Font* font, HAlign hAlign=HAlign::CENTER, VAlign vAlign=VAlign::CENTER);
 	~Label();
 
-	std::string text();
+	std::string getText();
 	void setColor(glm::vec3 color);
 	glm::vec2 getPosition();
 	void setPosition(float x, float y);
