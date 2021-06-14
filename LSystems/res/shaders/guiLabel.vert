@@ -1,4 +1,4 @@
-#version 460 core
+#version 330 core
 
 in vec2 aPosition;
 in vec2 aTexCoords;
